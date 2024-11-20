@@ -9,6 +9,11 @@
   "author": "Disielsida",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^2.0.4",
+    "i18next": "^23.16.8",
+    "react-i18next": "^15.1.1"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.81.0"
   }
 }
