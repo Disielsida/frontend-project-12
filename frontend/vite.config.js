@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: '0.0.0.0',
     port: 5002,
     proxy: {
       '/api': {
