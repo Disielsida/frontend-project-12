@@ -8,6 +8,9 @@ install:
 start-frontend:
 	make -C frontend start
 
+start: 
+	make -C frontend preview
+
 start-backend:
 	npx start-server -s ./frontend/dist
 
