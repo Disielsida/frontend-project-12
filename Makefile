@@ -9,7 +9,7 @@ start-frontend:
 	make -C frontend start
 
 start: 
-	make -C frontend preview
+	npm run -C frontend preview
 
 start-backend:
 	npx start-server -s ./frontend/dist
