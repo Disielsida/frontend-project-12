@@ -16,4 +16,4 @@ develop:
 
 build:
 	rm -rf frontend/build
-	npm -C frontend build
+	make -C frontend build
