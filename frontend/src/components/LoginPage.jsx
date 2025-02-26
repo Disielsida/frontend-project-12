@@ -1,15 +1,13 @@
 import {
-  Navbar, Container, Row, Col, Card, Image, Form, Button,
+  Container, Row, Col, Card, Image, Form, Button,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import loginImage from '../images/login.jpg';
 
-const LoginPage = () => (
-  <>
-    <Navbar expand="lg" bg="white" className="shadow-sm">
-      <Container>
-        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-      </Container>
-    </Navbar>
+const LoginPage = () => {
+  const { t } = useTranslation();
+
+  return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-content-center h-100">
         <Col xs={12} md={8} xxl={6}>
@@ -21,7 +19,7 @@ const LoginPage = () => (
                 </Col>
                 <Col xs={12} md={6} className="mt-3 mt-md-0">
                   <Form>
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('login')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
                         placeholder="Ваш ник"
@@ -59,7 +57,7 @@ const LoginPage = () => (
         </Col>
       </Row>
     </Container>
-  </>
-);
+  );
+};
 
 export default LoginPage;

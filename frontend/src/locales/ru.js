@@ -1,7 +1,9 @@
 export default {
   translation: {
-    title: 'Хекслет чат',
-    welcome: 'Добро пожаловать в приложение Hexlet Chat!',
-    buttonText: 'Нажми на меня!',
+    brand: 'Hexlet Chat',
+    login: 'Войти',
+    notFound: 'Страница не найдена',
+    butYouCanGo: 'Но вы можете перейти',
+    onMainPage: 'на главную страницу',
   },
 };
