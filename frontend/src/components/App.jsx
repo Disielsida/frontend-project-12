@@ -1,8 +1,9 @@
+// import { useTranslation } from 'react-i18next';
+import LoginPage from './LoginPage.jsx';
+
 const App = () => (
-  <div className="container text-center py-5">
-    <h1 className="display-3 text-primary">Hexlet Chat</h1>
-    <p className="lead text-muted">Welcome to the Hexlet Chat application!</p>
-    <button type="button" className="btn btn-primary btn-lg">Click me!</button>
+  <div className="d-flex flex-column h-100">
+    <LoginPage />
   </div>
 );
 
