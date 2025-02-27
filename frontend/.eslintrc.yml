@@ -38,3 +38,5 @@ rules:
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
   no-unused-vars: [2, { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
+  no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
+  comma-dangle: ["error", "never"]

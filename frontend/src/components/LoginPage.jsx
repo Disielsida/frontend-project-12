@@ -1,11 +1,46 @@
 import {
-  Container, Row, Col, Card, Image, Form, Button,
+  Container, Row, Col, Card, Image, Form, Button
 } from 'react-bootstrap';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../redux/slices/AuthSlice.jsx';
 import loginImage from '../images/login.jpg';
 
 const LoginPage = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const formControlRef = useRef();
+
+  const { loggedIn, error } = useSelector((state) => state.authorization);
+  const redirectPath = location.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    formControlRef.current.focus();
+    if (loggedIn) {
+      dispatch(logIn);
+      navigate(redirectPath, { replace: true });
+    }
+  }, [redirectPath, loggedIn, dispatch, navigate]);
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    onSubmit: (values) => {
+      const { username, password } = values;
+      const loginObject = { username, password };
+      dispatch(logIn(loginObject));
+      if (loggedIn) {
+        navigate(redirectPath, { replace: true });
+      }
+    }
+  });
 
   return (
     <Container fluid className="h-100">
@@ -18,7 +53,7 @@ const LoginPage = () => {
                   <Image src={loginImage} className="rounded-circle" alt="Войти" />
                 </Col>
                 <Col xs={12} md={6} className="mt-3 mt-md-0">
-                  <Form>
+                  <Form onSubmit={formik.handleSubmit}>
                     <h1 className="text-center mb-4">{t('login')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
@@ -27,6 +62,11 @@ const LoginPage = () => {
                         autoComplete="username"
                         required
                         id="username"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
+                        isInvalid={error}
+                        ref={formControlRef}
                       />
                       <Form.Label htmlFor="username">Ваш ник</Form.Label>
                     </Form.Group>
@@ -39,8 +79,15 @@ const LoginPage = () => {
                         autoComplete="password"
                         required
                         id="password"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        isInvalid={error}
                       />
                       <Form.Label htmlFor="password">Пароль</Form.Label>
+                      <Form.Control.Feedback type="invalid" className="invalid-tooltip">
+                        {error}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
                   </Form>

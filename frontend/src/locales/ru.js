@@ -4,6 +4,6 @@ export default {
     login: 'Войти',
     notFound: 'Страница не найдена',
     butYouCanGo: 'Но вы можете перейти',
-    onMainPage: 'на главную страницу',
-  },
+    onMainPage: 'на главную страницу'
+  }
 };
