@@ -19,6 +19,7 @@ export const logOut = createAsyncThunk(
   'auth/logOut',
   async () => {
     localStorage.removeItem('authToken');
+    return {};
   }
 );
 
@@ -29,13 +30,14 @@ const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(logOut.fulfilled, (state) => {
       state.loggedIn = false;
+      state.error = null;
     });
     builder.addCase(logIn.fulfilled, (state) => {
       state.loggedIn = true;
+      state.error = null;
     });
     builder.addCase(logIn.rejected, (state, action) => {
       state.error = action.payload;
-      console.log(action.payload);
     });
   }
 });

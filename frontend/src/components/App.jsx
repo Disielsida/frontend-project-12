@@ -10,8 +10,8 @@ import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const PrivateRoute = ({ children }) => {
-  const { loggedIn } = useSelector((state) => state.authorization);
   const location = useLocation();
+  const { loggedIn } = useSelector((state) => state.authorization);
 
   return (
     loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
@@ -20,7 +20,7 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
   const { t } = useTranslation();
-
+  // localStorage.removeItem('authToken');
   return (
     <Router>
       <div className="d-flex flex-column h-100">

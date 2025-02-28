@@ -20,24 +20,25 @@ const LoginPage = () => {
   const redirectPath = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    formControlRef.current.focus();
     if (loggedIn) {
-      dispatch(logIn);
       navigate(redirectPath, { replace: true });
     }
-  }, [redirectPath, loggedIn, dispatch, navigate]);
+    formControlRef.current.focus();
+  }, [loggedIn, redirectPath, navigate]);
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: ''
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { username, password } = values;
       const loginObject = { username, password };
-      dispatch(logIn(loginObject));
-      if (loggedIn) {
+      try {
+        await dispatch(logIn(loginObject));
         navigate(redirectPath, { replace: true });
+      } catch (e) {
+        console.error(e);
       }
     }
   });
