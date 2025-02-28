@@ -1,11 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import {
-  BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation
+  BrowserRouter as Router, Routes, Route, Navigate, useLocation
 } from 'react-router-dom';
-import {
-  Navbar, Container
-} from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
@@ -18,35 +16,26 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = () => {
-  const { t } = useTranslation();
-  // localStorage.removeItem('authToken');
-  return (
-    <Router>
-      <div className="d-flex flex-column h-100">
-        <Navbar expand="lg" bg="white" className="shadow-sm">
-          <Container>
-            <Navbar.Brand as={Link} to="/">{t('brand')}</Navbar.Brand>
-          </Container>
-        </Navbar>
-
-        <Container fluid className="h-100">
-          <Routes>
-            <Route
-              path="/"
-              element={(
-                <PrivateRoute>
-                  <div>Disielsida#1</div>
-                </PrivateRoute>
+const App = () => (
+  <Router>
+    <div className="d-flex flex-column h-100">
+      <Header />
+      <Container fluid className="h-100">
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <div>Disielsida#1</div>
+              </PrivateRoute>
             )}
-            />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Container>
-      </div>
-    </Router>
-  );
-};
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Container>
+    </div>
+  </Router>
+);
 
 export default App;
