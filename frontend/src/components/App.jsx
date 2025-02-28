@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
+import PrivatePage from './PrivatePage.jsx';
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
@@ -18,23 +19,22 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => (
   <Router>
-    <div className="d-flex flex-column h-100">
+    <Container fluid className="d-flex flex-column h-100 p-0">
       <Header />
-      <Container fluid className="h-100">
-        <Routes>
-          <Route
-            path="/"
-            element={(
-              <PrivateRoute>
-                <div>Disielsida#1</div>
-              </PrivateRoute>
-            )}
-          />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Container>
-    </div>
+      <Routes>
+        <Route
+          path="/"
+          element={(
+            <PrivateRoute>
+              <PrivatePage />
+            </PrivateRoute>
+          )}
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Container>
+
   </Router>
 );
 

@@ -28,17 +28,18 @@ const AuthSlice = createSlice({
   initialState: { loggedIn: localStorage.getItem('authToken') !== null, error: null },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(logOut.fulfilled, (state) => {
-      state.loggedIn = false;
-      state.error = null;
-    });
-    builder.addCase(logIn.fulfilled, (state) => {
-      state.loggedIn = true;
-      state.error = null;
-    });
-    builder.addCase(logIn.rejected, (state, action) => {
-      state.error = action.payload;
-    });
+    builder
+      .addCase(logOut.fulfilled, (state) => {
+        state.loggedIn = false;
+        state.error = null;
+      })
+      .addCase(logIn.fulfilled, (state) => {
+        state.loggedIn = true;
+        state.error = null;
+      })
+      .addCase(logIn.rejected, (state, action) => {
+        state.error = action.payload;
+      });
   }
 });
 
