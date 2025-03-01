@@ -7,6 +7,7 @@ import App from './components/App';
 import './index.css';
 import './assets/application.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));

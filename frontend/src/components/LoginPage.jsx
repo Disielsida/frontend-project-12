@@ -35,7 +35,7 @@ const LoginPage = () => {
       const { username, password } = values;
       const loginObject = { username, password };
       try {
-        await dispatch(logIn(loginObject));
+        await dispatch(logIn(loginObject)).unwrap();
         navigate(redirectPath, { replace: true });
       } catch (e) {
         console.error(e);
