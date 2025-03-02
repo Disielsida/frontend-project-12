@@ -25,20 +25,15 @@ export const logOut = createAsyncThunk(
 
 const AuthSlice = createSlice({
   name: 'authorization',
-  initialState: { loggedIn: localStorage.getItem('authToken') !== null, error: null },
+  initialState: { loggedIn: localStorage.getItem('authToken') !== null },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(logOut.fulfilled, (state) => {
         state.loggedIn = false;
-        state.error = null;
       })
       .addCase(logIn.fulfilled, (state) => {
         state.loggedIn = true;
-        state.error = null;
-      })
-      .addCase(logIn.rejected, (state, action) => {
-        state.error = action.payload;
       });
   }
 });

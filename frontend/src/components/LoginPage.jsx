@@ -1,7 +1,7 @@
 import {
   Container, Row, Col, Card, Image, Form, Button
 } from 'react-bootstrap';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,8 +15,9 @@ const LoginPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const formControlRef = useRef();
+  const [error, setError] = useState(null);
 
-  const { loggedIn, error } = useSelector((state) => state.authorization);
+  const { loggedIn } = useSelector((state) => state.authorization);
   const redirectPath = location.state?.from?.pathname || '/';
 
   useEffect(() => {
@@ -31,14 +32,15 @@ const LoginPage = () => {
       username: '',
       password: ''
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
       const { username, password } = values;
       const loginObject = { username, password };
       try {
         await dispatch(logIn(loginObject)).unwrap();
         navigate(redirectPath, { replace: true });
       } catch (e) {
-        console.error(e);
+        setError(e);
+        setSubmitting(false);
       }
     }
   });
@@ -90,7 +92,7 @@ const LoginPage = () => {
                         {error}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                    <Button disabled={formik.isSubmitting} type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
                   </Form>
                 </Col>
               </Row>
