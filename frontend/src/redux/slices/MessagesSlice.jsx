@@ -3,6 +3,8 @@ import axios from 'axios';
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../../routes.js';
 
+import socket from '../../socket.js';
+
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async () => {
@@ -18,17 +20,34 @@ export const fetchMessages = createAsyncThunk(
   }
 );
 
+export const addMessage = createAsyncThunk(
+  'messages/addMessage',
+  async (message) => {
+    const token = localStorage.getItem('authToken');
+
+    const response = await axios.post(routes.messagesPath(), message, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data;
+  }
+);
+
 const messagesAdapter = createEntityAdapter();
 
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: messagesAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    addSocketMessage: messagesAdapter.addOne
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.fulfilled, (state, { payload }) => {
-        const messagesSortedById = payload.reduce((accumulator, channel) => (
-          { ...accumulator, [channel.id]: channel }
+        const messagesSortedById = payload.reduce((accumulator, message) => (
+          { ...accumulator, [message.id]: message }
         ), {});
 
         state.entities = messagesSortedById;
@@ -36,9 +55,17 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchMessages.rejected, (_, { error }) => {
         console.error('Ошибка при загрузке сообщений: ', error);
+      })
+      .addCase(addMessage.fulfilled, (state, { payload }) => {
+        messagesAdapter.addOne(state, payload);
+        socket.emit('newMessage', payload);
+      })
+      .addCase(addMessage.rejected, (_, { error }) => {
+        console.error('Ошибка при добавлении сообщения: ', error);
       });
   }
 });
 
+export const { actions } = messagesSlice;
 export default messagesSlice.reducer;
 export const messagesSelectors = messagesAdapter.getSelectors((state) => state.messages);

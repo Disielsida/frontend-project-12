@@ -4,15 +4,20 @@ import {
   Container, Row, Col, Button, Nav, Stack, Form, InputGroup, Card, ListGroup
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
 
 import { fetchChannels, channelsSelectors, actions as channelsActions } from '../redux/slices/ChannelsSlice.jsx';
-import { fetchMessages, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
+import { fetchMessages, addMessage, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
 import Channel from './Channel.jsx';
 import Message from './Message.jsx';
+import useSocket from '../hooks/useSocket.jsx';
 
 const PrivatePage = () => {
+  useSocket();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const username = useSelector((state) => state.authorization.username);
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -35,6 +40,18 @@ const PrivatePage = () => {
   const messages = useSelector(messagesSelectors.selectAll);
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
   const messagesCount = filteredMessages.length;
+
+  const formik = useFormik({
+    initialValues: {
+      body: ''
+    },
+    onSubmit: async (values) => {
+      const { body } = values;
+      const message = { body, channelId: activeChannelId, username };
+      await dispatch(addMessage(message)).unwrap();
+      formik.setFieldValue('body', '');
+    }
+  });
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
@@ -76,22 +93,24 @@ const PrivatePage = () => {
                 </ListGroup>
               </Card.Body>
             </Card>
-            { filteredMessages.map((message) => (
-              <Message
-                key={message.id}
-                messageData={message}
-              />
-            ))}
+            <ListGroup id="messages-box" className="chat-messages overflow-auto px-5">
+              { filteredMessages.map((message) => (
+                <Message
+                  key={message.id}
+                  messageData={message}
+                />
+              ))}
+            </ListGroup>
             <Container className="mt-auto px-5 py-3">
-              <Form noValidate className=" border rounded-2">
+              <Form noValidate className=" border rounded-2" onSubmit={formik.handleSubmit}>
                 <InputGroup hasValidation>
                   <Form.Control
-                    // onChange=""
+                    onChange={formik.handleChange}
+                    value={formik.values.body}
                     name="body"
                     aria-label="Новое сообщение"
                     placeholder="Введите сообщение..."
                     className="border-0 p-0 ps-2 form-control"
-                    // value=""
                   />
                   <Button type="submit" disabled="" className="btn-group-vertical">
                     <i className="bi bi-send fw-bold" style={{ fontWeight: 'bold', fontSize: '25px', color: 'light' }} />
