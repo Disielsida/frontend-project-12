@@ -22,3 +22,12 @@ code {
   color: grey;
 }
 
+.custom-invalid-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  z-index: 10;
+}
+

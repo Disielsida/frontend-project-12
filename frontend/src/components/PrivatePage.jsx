@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { fetchChannels, channelsSelectors, actions as channelsActions } from '../redux/slices/ChannelsSlice.jsx';
 import { fetchMessages, addMessage, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
@@ -41,15 +42,21 @@ const PrivatePage = () => {
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
   const messagesCount = filteredMessages.length;
 
+  const validationSchema = Yup.object({
+    body: Yup.string().trim().required('Сообщение не должно быть пустым')
+  });
+
   const formik = useFormik({
     initialValues: {
       body: ''
     },
+    validationSchema,
     onSubmit: async (values) => {
       const { body } = values;
       const message = { body, channelId: activeChannelId, username };
       await dispatch(addMessage(message)).unwrap();
       formik.setFieldValue('body', '');
+      formik.setTouched({ body: false });
     }
   });
 
@@ -106,13 +113,18 @@ const PrivatePage = () => {
                 <InputGroup hasValidation>
                   <Form.Control
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.body}
                     name="body"
                     aria-label="Новое сообщение"
                     placeholder="Введите сообщение..."
                     className="border-0 p-0 ps-2 form-control"
+                    isInvalid={formik.errors.body}
                   />
-                  <Button type="submit" disabled="" className="btn-group-vertical">
+                  <Form.Control.Feedback type="invalid" className="custom-invalid-tooltip">
+                    {formik.errors.body}
+                  </Form.Control.Feedback>
+                  <Button type="submit" disabled={formik.isSubmitting || formik.errors.body} className="btn-group-vertical">
                     <i className="bi bi-send fw-bold" style={{ fontWeight: 'bold', fontSize: '25px', color: 'light' }} />
                     <span className="visually-hidden">Отправить</span>
                   </Button>
