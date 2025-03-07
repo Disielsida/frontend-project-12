@@ -11,6 +11,12 @@ export default {
       count_one: '{{count}} сообщение',
       count_few: '{{count}} сообщения',
       count_many: '{{count}} сообщений'
+    },
+    placeholders: {
+      messageControl: 'Введите сообщение...'
+    },
+    errors: {
+      emptyMessage: 'Поле не должно быть пустым или состоять из пробелов'
     }
   }
 };

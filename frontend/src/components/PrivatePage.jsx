@@ -1,17 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Container, Row, Col, Button, Nav, Stack, Form, InputGroup, Card, ListGroup
+  Container, Row, Col, Stack, Card, ListGroup
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import ChannelsList from './ChannelsList.jsx';
+import MessagesList from './MessagesList.jsx';
+import MessageForm from './MessageForm.jsx';
 import { fetchChannels, channelsSelectors, actions as channelsActions } from '../redux/slices/ChannelsSlice.jsx';
-import { fetchMessages, addMessage, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
-import Channel from './Channel.jsx';
+import { fetchMessages, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
 import Message from './Message.jsx';
 import useSocket from '../hooks/useSocket.jsx';
+
+import getModal from './modals/index.js';
+
+const renderModal = (modalInfo, closeModal) => {
+  if (!modalInfo.type) {
+    return null;
+  }
+
+  const ModalComponent = getModal(modalInfo.type);
+  return (
+    <ModalComponent
+      modalInfo={modalInfo}
+      closeModal={closeModal}
+    />
+  );
+};
 
 const PrivatePage = () => {
   useSocket();
@@ -19,6 +35,11 @@ const PrivatePage = () => {
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.authorization.username);
+
+  const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
+
+  const openModal = (type, task = null) => setModalInfo({ type, task });
+  const closeModal = () => setModalInfo({ type: null, task: null });
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -42,99 +63,27 @@ const PrivatePage = () => {
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
   const messagesCount = filteredMessages.length;
 
-  const validationSchema = Yup.object({
-    body: Yup.string().trim().required('Сообщение не должно быть пустым')
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      body: ''
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      const { body } = values;
-      const message = { body, channelId: activeChannelId, username };
-      await dispatch(addMessage(message)).unwrap();
-      formik.setFieldValue('body', '');
-      formik.setTouched({ body: false });
-    }
-  });
-
   return (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="h-100 bg-white flex-md-row">
-        <Col xs={4} md={2} className="border-end px-0 bg-light d-flex flex-column h-100">
-          <Container className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4 align-items-center">
-            <b>{t('channels')}</b>
-            <Button variant="link" className="p-0 text-primary btn-group-vertical">
-              <i className="bi bi-shield-plus" />
-              <span className="visually-hidden">+</span>
-            </Button>
-          </Container>
-          <Nav id="channels-box" className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-            {channels.map((channel) => (
-              <Channel
-                key={channel.id}
-                channelData={channel}
-                handleSetActiveChannel={handleSetActiveChannel}
-                activeChannelId={activeChannelId}
-              />
-            ))}
-          </Nav>
-        </Col>
-        <Col className="p-0 h-100">
-          <Stack direction="vertical" className="h-100">
-            <Card className="bg-light mb-4 p-3 shadow-sm small rounded-0 border-0">
-              <Card.Body className="p-0">
-                <ListGroup id="messages-box" className="overflow-auto px-5">
-                  <p className="m-0">
-                    <b>
-                      #
-                      {activeChannel ? activeChannel.name : null}
-                    </b>
-                  </p>
-                  <span className="text-muted">
-                    &nbsp;
-                    {t('messages.count', { count: messagesCount })}
-                  </span>
-                </ListGroup>
-              </Card.Body>
-            </Card>
-            <ListGroup id="messages-box" className="chat-messages overflow-auto px-5">
-              { filteredMessages.map((message) => (
-                <Message
-                  key={message.id}
-                  messageData={message}
-                />
-              ))}
-            </ListGroup>
-            <Container className="mt-auto px-5 py-3">
-              <Form noValidate className=" border rounded-2" onSubmit={formik.handleSubmit}>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.body}
-                    name="body"
-                    aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
-                    className="border-0 p-0 ps-2 form-control"
-                    isInvalid={formik.errors.body}
-                  />
-                  <Form.Control.Feedback type="invalid" className="custom-invalid-tooltip">
-                    {formik.errors.body}
-                  </Form.Control.Feedback>
-                  <Button type="submit" disabled={formik.isSubmitting || formik.errors.body} className="btn-group-vertical">
-                    <i className="bi bi-send fw-bold" style={{ fontWeight: 'bold', fontSize: '25px', color: 'light' }} />
-                    <span className="visually-hidden">Отправить</span>
-                  </Button>
-                </InputGroup>
-              </Form>
-            </Container>
-          </Stack>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Col xs={4} md={2} className="border-end px-0 bg-light d-flex flex-column h-100">
+            <ChannelsList
+              channels={channels}
+              activeChannelId={activeChannelId}
+              handleSetActiveChannel={handleSetActiveChannel}
+            />
+          </Col>
+          <Col className="p-0 h-100">
+            <Stack direction="vertical" className="h-100">
+              <MessagesList messages={filteredMessages} activeChannel={activeChannel} />
+              <MessageForm activeChannelId={activeChannelId} />
+            </Stack>
+          </Col>
+        </Row>
+      </Container>
+      {renderModal(modalInfo, closeModal)}
+    </>
   );
 };
 
