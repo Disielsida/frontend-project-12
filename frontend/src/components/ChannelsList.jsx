@@ -2,14 +2,16 @@ import { Nav, Button, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Channel from './Channel.jsx';
 
-const ChannelsList = ({ channels, activeChannelId, handleSetActiveChannel }) => {
+const ChannelsList = ({
+  channels, activeChannelId, handleSetActiveChannel, handleOpenModal
+}) => {
   const { t } = useTranslation();
 
   return (
     <>
       <Container className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4 align-items-center">
         <b>{t('channels')}</b>
-        <Button variant="link" className="p-0 text-primary btn-group-vertical">
+        <Button onClick={() => handleOpenModal('adding')} variant="link" className="p-0 text-primary btn-group-vertical">
           <i className="bi bi-shield-plus" />
           <span className="visually-hidden">+</span>
         </Button>
@@ -21,6 +23,7 @@ const ChannelsList = ({ channels, activeChannelId, handleSetActiveChannel }) => 
             channelData={channel}
             handleSetActiveChannel={handleSetActiveChannel}
             activeChannelId={activeChannelId}
+            handleOpenModal={handleOpenModal}
           />
         ))}
       </Nav>

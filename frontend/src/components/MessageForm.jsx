@@ -46,12 +46,12 @@ const MessageForm = ({ activeChannelId }) => {
             aria-label={t('newMessage')}
             placeholder={t('placeholders.messageControl')}
             className="border-0 p-0 ps-2 form-control"
-            isInvalid={formik.errors.body}
+            isInvalid={!!formik.errors.body}
           />
           <Form.Control.Feedback type="invalid" className="custom-invalid-tooltip">
             {formik.errors.body}
           </Form.Control.Feedback>
-          <Button type="submit" disabled={formik.isSubmitting || formik.errors.body} className="btn-group-vertical">
+          <Button type="submit" disabled={formik.isSubmitting || !!formik.errors.body} className="btn-group-vertical">
             <i className="bi bi-send fw-bold" style={{ fontWeight: 'bold', fontSize: '25px', color: 'light' }} />
             <span className="visually-hidden">{t('send')}</span>
           </Button>

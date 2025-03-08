@@ -1,45 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Container, Row, Col, Stack, Card, ListGroup
+  Container, Row, Col, Stack
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
 
 import ChannelsList from './ChannelsList.jsx';
 import MessagesList from './MessagesList.jsx';
 import MessageForm from './MessageForm.jsx';
 import { fetchChannels, channelsSelectors, actions as channelsActions } from '../redux/slices/ChannelsSlice.jsx';
 import { fetchMessages, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
-import Message from './Message.jsx';
 import useSocket from '../hooks/useSocket.jsx';
 
 import getModal from './modals/index.js';
 
-const renderModal = (modalInfo, closeModal) => {
+const renderModal = (modalInfo, handleCloseModal) => {
   if (!modalInfo.type) {
     return null;
   }
 
-  const ModalComponent = getModal(modalInfo.type);
+  const ModalComponent = getModal[modalInfo.type];
   return (
     <ModalComponent
       modalInfo={modalInfo}
-      closeModal={closeModal}
+      handleCloseModal={handleCloseModal}
     />
   );
 };
 
 const PrivatePage = () => {
   useSocket();
-  const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const username = useSelector((state) => state.authorization.username);
+  const [modalInfo, setModalInfo] = useState({ type: null, channelId: null });
 
-  const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
-
-  const openModal = (type, task = null) => setModalInfo({ type, task });
-  const closeModal = () => setModalInfo({ type: null, task: null });
+  const handleOpenModal = (type, channelId = null) => setModalInfo({ type, channelId });
+  const handleCloseModal = () => setModalInfo({ type: null, task: null });
 
   useEffect(() => {
     dispatch(fetchChannels());
@@ -61,7 +56,6 @@ const PrivatePage = () => {
 
   const messages = useSelector(messagesSelectors.selectAll);
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
-  const messagesCount = filteredMessages.length;
 
   return (
     <>
@@ -72,6 +66,7 @@ const PrivatePage = () => {
               channels={channels}
               activeChannelId={activeChannelId}
               handleSetActiveChannel={handleSetActiveChannel}
+              handleOpenModal={handleOpenModal}
             />
           </Col>
           <Col className="p-0 h-100">
@@ -82,7 +77,7 @@ const PrivatePage = () => {
           </Col>
         </Row>
       </Container>
-      {renderModal(modalInfo, closeModal)}
+      {renderModal(modalInfo, handleCloseModal)}
     </>
   );
 };

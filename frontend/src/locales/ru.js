@@ -17,6 +17,15 @@ export default {
     },
     errors: {
       emptyMessage: 'Поле не должно быть пустым или состоять из пробелов'
-    }
+    },
+    addChannel: 'Добавить канал',
+    cancel: 'Отменить',
+    send: 'Отправить',
+    RequiredField: 'Обязательное поле',
+    minMaxRange: 'От 3 до 20 символов',
+    mustBeUnique: 'Должно быть уникальным',
+    removeChannel: 'Удалить канал',
+    areYouSure: 'Уверены?',
+    delete: 'Удалить'
   }
 };

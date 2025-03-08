@@ -1,7 +1,9 @@
-import Add from './AddModal.jsx';
+import AddModal from './AddModal.jsx';
+import RemoveModal from './RemoveModal.jsx';
 
 const modals = {
-  adding: Add
+  adding: AddModal,
+  removing: RemoveModal
 };
 
 export default modals;
