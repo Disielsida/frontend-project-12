@@ -11,10 +11,12 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const { id } = modalInfo.channel;
+
   const formik = useFormik({
     initialValues: {},
     onSubmit: () => {
-      dispatch(removeChannel(modalInfo.channelId));
+      dispatch(removeChannel(id));
       handleCloseModal();
     }
   });

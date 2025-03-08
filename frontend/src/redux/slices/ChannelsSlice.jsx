@@ -38,7 +38,21 @@ export const removeChannel = createAsyncThunk(
   async (id) => {
     const token = localStorage.getItem('authToken');
 
-    const response = await axios.delete(routes.removeChannelPath(id), {
+    const response = await axios.delete(routes.removeOrRenameChannelPath(id), {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  }
+);
+
+export const renameChannel = createAsyncThunk(
+  'channels/renameChannel',
+  async ({ id, editedChannel }) => {
+    const token = localStorage.getItem('authToken');
+
+    const response = await axios.patch(routes.removeOrRenameChannelPath(id), editedChannel, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -59,7 +73,13 @@ const channelsSlice = createSlice({
       state.activeChannelId = payload;
     },
     addSocketChannel: channelsAdapter.addOne,
-    removeSocketChannel: channelsAdapter.removeOne
+    removeSocketChannel: channelsAdapter.removeOne,
+    renameSocketChannel(state, { payload }) {
+      channelsAdapter.updateOne(state, {
+        id: payload.id,
+        changes: { name: payload.name }
+      });
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -93,6 +113,16 @@ const channelsSlice = createSlice({
       })
       .addCase(removeChannel.rejected, (_, { error }) => {
         console.error('Ошибка при удалении канала: ', error);
+      })
+      .addCase(renameChannel.fulfilled, (state, { payload }) => {
+        channelsAdapter.updateOne(state, {
+          id: payload.id,
+          changes: { name: payload.name }
+        });
+        socket.emit('renameChannel', payload);
+      })
+      .addCase(renameChannel.rejected, (_, { error }) => {
+        console.error('Ошибка при переименовании канала: ', error);
       });
   }
 });

@@ -26,6 +26,7 @@ export default {
     mustBeUnique: 'Должно быть уникальным',
     removeChannel: 'Удалить канал',
     areYouSure: 'Уверены?',
-    delete: 'Удалить'
+    delete: 'Удалить',
+    renameChannel: 'Переименовать канал'
   }
 };

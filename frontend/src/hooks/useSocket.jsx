@@ -22,10 +22,15 @@ const useSocket = () => {
       dispatch(channelsActions.removeSocketChannel(payload.id));
     });
 
+    socket.on('renameChannel', (payload) => {
+      dispatch(channelsActions.renameSocketChannel(payload));
+    });
+
     return () => {
       socket.off('newMessage');
       socket.off('newChannel');
       socket.off('removeChannel');
+      socket.off('renameChannel');
     };
   }, [dispatch]);
 };

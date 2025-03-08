@@ -34,8 +34,8 @@ const Channel = ({
           <span className="visually-hidden">Управление каналом</span>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => handleOpenModal('removing', channelData.id)}>Удалить</Dropdown.Item>
-            <Dropdown.Item onClick={() => console.log('Удалить', channelData.id)}>Переименовать</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>Удалить</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleOpenModal('renaming', channelData)}>Переименовать</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </ButtonGroup>

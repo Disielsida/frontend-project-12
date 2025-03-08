@@ -31,9 +31,9 @@ const PrivatePage = () => {
   useSocket();
   const dispatch = useDispatch();
 
-  const [modalInfo, setModalInfo] = useState({ type: null, channelId: null });
+  const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
 
-  const handleOpenModal = (type, channelId = null) => setModalInfo({ type, channelId });
+  const handleOpenModal = (type, channel = null) => setModalInfo({ type, channel });
   const handleCloseModal = () => setModalInfo({ type: null, task: null });
 
   useEffect(() => {
