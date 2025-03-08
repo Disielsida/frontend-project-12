@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { removeChannel } from '../../redux/slices/ChannelsSlice';
 
@@ -18,6 +19,9 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
     onSubmit: () => {
       dispatch(removeChannel(id));
       handleCloseModal();
+      toast.success(t('channelRemoved'), {
+        autoClose: 3000
+      });
     }
   });
 

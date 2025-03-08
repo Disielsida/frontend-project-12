@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { renameChannel, channelsSelectors } from '../../redux/slices/ChannelsSlice';
 
@@ -41,6 +42,9 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
       const editedChannel = values;
       dispatch(renameChannel({ id, editedChannel }));
       handleCloseModal();
+      toast.success(t('channelRenamed'), {
+        autoClose: 3000
+      });
     }
   });
 

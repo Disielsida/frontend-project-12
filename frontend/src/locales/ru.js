@@ -27,6 +27,9 @@ export default {
     removeChannel: 'Удалить канал',
     areYouSure: 'Уверены?',
     delete: 'Удалить',
-    renameChannel: 'Переименовать канал'
+    renameChannel: 'Переименовать канал',
+    channelCreated: 'Канал создан',
+    channelRenamed: 'Канал переименован',
+    channelRemoved: 'Канал удалён'
   }
 };

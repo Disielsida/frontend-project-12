@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router, Routes, Route, Navigate, useLocation
 } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -34,7 +35,7 @@ const App = () => (
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Container>
-
+    <ToastContainer />
   </Router>
 );
 
