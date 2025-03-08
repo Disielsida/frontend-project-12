@@ -5,6 +5,8 @@ import routes from '../../routes.js';
 
 import socket from '../../socket.js';
 
+import { actions as channelsActions } from './ChannelsSlice.jsx';
+
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async () => {
@@ -62,6 +64,13 @@ const messagesSlice = createSlice({
       })
       .addCase(addMessage.rejected, (_, { error }) => {
         console.error('Ошибка при добавлении сообщения: ', error);
+      })
+      .addCase(channelsActions.removeSocketChannel, (state, { payload }) => {
+        const messages = Object.values(state.entities).map((entity) => ({ ...entity }));
+        const filtredMessages = messages.filter((message) => message.channelId === payload);
+        const filtresMessageIds = filtredMessages.map((message) => message.id);
+
+        messagesAdapter.removeMany(state, filtresMessageIds);
       });
   }
 });

@@ -73,7 +73,10 @@ const channelsSlice = createSlice({
       state.activeChannelId = payload;
     },
     addSocketChannel: channelsAdapter.addOne,
-    removeSocketChannel: channelsAdapter.removeOne,
+    removeSocketChannel(state, { payload }) {
+      channelsAdapter.removeOne(state, payload);
+      state.activeChannelId = state.ids.length > 0 ? state.ids[0] : null;
+    },
     renameSocketChannel(state, { payload }) {
       channelsAdapter.updateOne(state, {
         id: payload.id,
