@@ -27,10 +27,10 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .trim()
-      .required(t('RequiredField'))
-      .min(3, t('minMaxRange'))
-      .max(20, t('minMaxRange'))
-      .notOneOf(channelsNames, t('mustBeUnique'))
+      .required(t('errors.RequiredField'))
+      .min(3, t('errors.minMaxRange'))
+      .max(20, t('errors.minMaxRange'))
+      .notOneOf(channelsNames, t('errors.mustBeUnique'))
   });
 
   const formik = useFormik({
@@ -42,7 +42,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
       const editedChannel = values;
       dispatch(renameChannel({ id, editedChannel }));
       handleCloseModal();
-      toast.success(t('channelRenamed'), {
+      toast.success(t('modals.renameModal.channelRenamed'), {
         autoClose: 3000
       });
     }
@@ -51,7 +51,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
   return (
     <Modal show onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title className="h4">{t('renameChannel')}</Modal.Title>
+        <Modal.Title className="h4">{t('modals.renameModal.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -69,10 +69,10 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
           </FormGroup>
           <div className="d-flex justify-content-end mt-3">
             <Button variant="secondary" onClick={handleCloseModal} className="me-2">
-              {t('cancel')}
+              {t('buttons.cancel')}
             </Button>
             <Button disabled={formik.isSubmitting} type="submit" variant="primary">
-              {t('send')}
+              {t('buttons.send')}
             </Button>
           </div>
         </Form>

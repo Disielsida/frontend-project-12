@@ -58,10 +58,10 @@ const LoginPage = () => {
                 </Col>
                 <Col xs={12} md={6} className="mt-3 mt-md-0">
                   <Form onSubmit={formik.handleSubmit}>
-                    <h1 className="text-center mb-4">{t('login')}</h1>
+                    <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
-                        placeholder={t('yourNick')}
+                        placeholder={t('placeholders.yourNick')}
                         name="username"
                         autoComplete="username"
                         required
@@ -72,13 +72,13 @@ const LoginPage = () => {
                         isInvalid={error}
                         ref={formControlRef}
                       />
-                      <Form.Label htmlFor="username">{t('yourNick')}</Form.Label>
+                      <Form.Label htmlFor="username">{t('placeholders.yourNick')}</Form.Label>
                     </Form.Group>
 
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
-                        placeholder={t('password')}
+                        placeholder={t('placeholders.password')}
                         name="password"
                         autoComplete="password"
                         required
@@ -88,20 +88,20 @@ const LoginPage = () => {
                         value={formik.values.password}
                         isInvalid={error}
                       />
-                      <Form.Label htmlFor="password">{t('password')}</Form.Label>
+                      <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {error}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button disabled={formik.isSubmitting} type="submit" variant="outline-primary" className="w-100 mb-3">{t('login')}</Button>
+                    <Button disabled={formik.isSubmitting} type="submit" variant="outline-primary" className="w-100 mb-3">{t('buttons.login')}</Button>
                   </Form>
                 </Col>
               </Row>
             </Card.Body>
             <Card.Footer className="p-4">
               <Container className="text-center">
-                <span className="m-1">{t('noAccount')}</span>
-                <Link to="/signup">{t('registration')}</Link>
+                <span className="m-1">{t('loginPage.noAccount')}</span>
+                <Link to="/signup">{t('loginPage.registration')}</Link>
               </Container>
             </Card.Footer>
           </Card>

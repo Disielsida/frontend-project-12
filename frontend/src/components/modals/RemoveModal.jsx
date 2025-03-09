@@ -19,7 +19,7 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
     onSubmit: () => {
       dispatch(removeChannel(id));
       handleCloseModal();
-      toast.success(t('channelRemoved'), {
+      toast.success(t('modals.removeModal.channelRemoved'), {
         autoClose: 3000
       });
     }
@@ -28,17 +28,17 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
   return (
     <Modal show onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title className="h4">{t('removeChannel')}</Modal.Title>
+        <Modal.Title className="h4">{t('modals.removeModal.removeChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <p className="lead">{t('areYouSure')}</p>
+          <p className="lead">{t('modals.removeModal.areYouSure')}</p>
           <div className="d-flex justify-content-end mt-3">
             <Button variant="secondary" onClick={handleCloseModal} className="me-2">
-              {t('cancel')}
+              {t('buttons.cancel')}
             </Button>
             <Button type="submit" variant="danger">
-              {t('delete')}
+              {t('buttons.delete')}
             </Button>
           </div>
         </Form>

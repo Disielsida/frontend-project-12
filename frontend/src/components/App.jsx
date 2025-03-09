@@ -9,31 +9,32 @@ import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
+import routes from '../routes.js';
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
   const { loggedIn } = useSelector((state) => state.authorization);
 
   return (
-    loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    loggedIn ? children : <Navigate to={routes.loginPagePath()} state={{ from: location }} />
   );
 };
 
 const App = () => (
-  <Router>
+  <Router basename="/">
     <Container fluid className="d-flex flex-column h-100 p-0">
       <Header />
       <Routes>
         <Route
-          path="/"
+          path={routes.chatsPagePath()}
           element={(
             <PrivateRoute>
               <PrivatePage />
             </PrivateRoute>
           )}
         />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<RegistrationPage />} />
+        <Route path={routes.loginPagePath()} element={<LoginPage />} />
+        <Route path={routes.signupPagePath()} element={<RegistrationPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Container>

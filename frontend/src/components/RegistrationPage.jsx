@@ -19,7 +19,7 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const [networkError, setNetworkError] = useState(null);
 
-  const redirectPath = routes.chatsPath();
+  const redirectPath = routes.chatsPagePath();
   const { loggedIn } = useSelector((state) => state.authorization);
 
   useEffect(() => {
@@ -32,15 +32,15 @@ const RegistrationPage = () => {
   const validationSchema = Yup.object({
     username: Yup.string()
       .trim()
-      .required(t('RequiredField'))
-      .min(3, t('minMaxRange'))
-      .max(20, t('minMaxRange')),
+      .required(t('errors.RequiredField'))
+      .min(3, t('errors.minMaxRange'))
+      .max(20, t('errors.minMaxRange')),
     password: Yup.string()
-      .required(t('RequiredField'))
-      .min(6, t('atLeastSix')),
+      .required(t('errors.RequiredField'))
+      .min(6, t('errors.atLeastSix')),
     confirmPassword: Yup.string()
-      .required(t('RequiredField'))
-      .oneOf([Yup.ref('password'), null], t('passwordsMustMatch'))
+      .required(t('errors.RequiredField'))
+      .oneOf([Yup.ref('password'), null], t('errors.passwordsMustMatch'))
   });
 
   const formik = useFormik({
@@ -76,10 +76,10 @@ const RegistrationPage = () => {
                 </Col>
                 <Col xs={12} md={6} className="mt-3 mt-md-0">
                   <Form onSubmit={formik.handleSubmit}>
-                    <h1 className="text-center mb-4">{t('registration')}</h1>
+                    <h1 className="text-center mb-4">{t('registrationPage.registration')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
-                        placeholder={t('userName')}
+                        placeholder={t('placeholders.userName')}
                         name="username"
                         autoComplete="username"
                         required
@@ -90,7 +90,7 @@ const RegistrationPage = () => {
                         isInvalid={formik.touched.username && !!formik.errors.username}
                         ref={formControlRef}
                       />
-                      <Form.Label htmlFor="username">{t('userName')}</Form.Label>
+                      <Form.Label htmlFor="username">{t('placeholders.userName')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {formik.errors.username}
                       </Form.Control.Feedback>
@@ -99,9 +99,9 @@ const RegistrationPage = () => {
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
-                        placeholder={t('password')}
+                        placeholder={t('placeholders.password')}
                         name="password"
-                        autoComplete="password"
+                        autoComplete="placeholders.password"
                         required
                         id="password"
                         onBlur={formik.handleBlur}
@@ -109,7 +109,7 @@ const RegistrationPage = () => {
                         value={formik.values.password}
                         isInvalid={formik.touched.password && !!formik.errors.password}
                       />
-                      <Form.Label htmlFor="password">{t('password')}</Form.Label>
+                      <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {formik.errors.password}
                       </Form.Control.Feedback>
@@ -118,7 +118,7 @@ const RegistrationPage = () => {
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
-                        placeholder={t('confirmPassword')}
+                        placeholder={t('placeholders.confirmPassword')}
                         name="confirmPassword"
                         autoComplete="password"
                         required
@@ -130,12 +130,19 @@ const RegistrationPage = () => {
                           formik.touched.confirmPassword && !!formik.errors.confirmPassword
                         }
                       />
-                      <Form.Label htmlFor="password">{t('confirmPassword')}</Form.Label>
+                      <Form.Label htmlFor="password">{t('placeholders.confirmPassword')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {formik.errors.confirmPassword}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0} type="submit" variant="outline-primary" className="w-100 mb-3">{t('toRegistrate')}</Button>
+                    <Button
+                      disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0}
+                      type="submit"
+                      variant="outline-primary"
+                      className="w-100 mb-3"
+                    >
+                      {t('buttons.toRegistrate')}
+                    </Button>
                   </Form>
                 </Col>
               </Row>

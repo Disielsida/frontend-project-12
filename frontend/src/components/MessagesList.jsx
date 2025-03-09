@@ -19,7 +19,7 @@ const MessagesList = ({ messages, activeChannel }) => {
             </p>
             <span className="text-muted">
               &nbsp;
-              {t('messages.count', { count: messagesCount })}
+              {t('messagesList.messages.count', { count: messagesCount })}
             </span>
           </ListGroup>
         </Card.Body>
