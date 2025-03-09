@@ -3,7 +3,9 @@ const routes = {
   channelsPath: () => '/api/v1/channels',
   messagesPath: () => '/api/v1/messages',
   webSocketPath: () => '/socket.io',
-  removeOrRenameChannelPath: (id) => `/api/v1/channels/${id}`
+  removeOrRenameChannelPath: (id) => `/api/v1/channels/${id}`,
+  signupPath: () => '/api/v1/signup',
+  chatsPath: () => '/'
 };
 
 export default routes;

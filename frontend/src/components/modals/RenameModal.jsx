@@ -63,7 +63,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
               onChange={formik.handleChange}
               value={formik.values.name}
               ref={formControlRef}
-              isInvalid={!!formik.errors.name}
+              isInvalid={formik.submitCount > 0 && !!formik.errors.name}
             />
             <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
           </FormGroup>
@@ -71,7 +71,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
             <Button variant="secondary" onClick={handleCloseModal} className="me-2">
               {t('cancel')}
             </Button>
-            <Button disabled={formik.isSubmitting || !!formik.errors.name} type="submit" variant="primary">
+            <Button disabled={formik.isSubmitting} type="submit" variant="primary">
               {t('send')}
             </Button>
           </div>

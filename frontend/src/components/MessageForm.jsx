@@ -40,7 +40,6 @@ const MessageForm = ({ activeChannelId }) => {
         <InputGroup hasValidation>
           <Form.Control
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             value={formik.values.body}
             name="body"
             aria-label={t('newMessage')}
@@ -51,7 +50,7 @@ const MessageForm = ({ activeChannelId }) => {
           <Form.Control.Feedback type="invalid" className="custom-invalid-tooltip">
             {formik.errors.body}
           </Form.Control.Feedback>
-          <Button type="submit" disabled={formik.isSubmitting || !!formik.errors.body} className="btn-group-vertical">
+          <Button type="submit" disabled={formik.isSubmitting || formik.errors.body} className="btn-group-vertical">
             <i className="bi bi-send fw-bold" style={{ fontWeight: 'bold', fontSize: '25px', color: 'light' }} />
             <span className="visually-hidden">{t('send')}</span>
           </Button>

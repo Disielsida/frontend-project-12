@@ -8,6 +8,7 @@ import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
+import RegistrationPage from './RegistrationPage.jsx';
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const App = () => (
           )}
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<RegistrationPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Container>

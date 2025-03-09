@@ -66,11 +66,11 @@ const messagesSlice = createSlice({
         console.error('Ошибка при добавлении сообщения: ', error);
       })
       .addCase(channelsActions.removeSocketChannel, (state, { payload }) => {
-        const messages = Object.values(state.entities).map((entity) => ({ ...entity }));
-        const filtredMessages = messages.filter((message) => message.channelId === payload);
-        const filtresMessageIds = filtredMessages.map((message) => message.id);
+        const filtredMessagesIds = Object.values(state.entities)
+          .filter((message) => message.channelId === payload)
+          .map((message) => message.id);
 
-        messagesAdapter.removeMany(state, filtresMessageIds);
+        messagesAdapter.removeMany(state, filtredMessagesIds);
       });
   }
 });

@@ -4,8 +4,9 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import routes from '../routes.js';
 import { logIn } from '../redux/slices/AuthSlice.jsx';
 import loginImage from '../images/login.jpg';
 
@@ -18,7 +19,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const { loggedIn } = useSelector((state) => state.authorization);
-  const redirectPath = location.state?.from?.pathname || '/';
+  const redirectPath = location.state?.from?.pathname || routes.chatsPath();
 
   useEffect(() => {
     if (loggedIn) {
@@ -60,7 +61,7 @@ const LoginPage = () => {
                     <h1 className="text-center mb-4">{t('login')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
-                        placeholder="Ваш ник"
+                        placeholder={t('yourNick')}
                         name="username"
                         autoComplete="username"
                         required
@@ -71,13 +72,13 @@ const LoginPage = () => {
                         isInvalid={error}
                         ref={formControlRef}
                       />
-                      <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                      <Form.Label htmlFor="username">{t('yourNick')}</Form.Label>
                     </Form.Group>
 
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
-                        placeholder="Пароль"
+                        placeholder={t('password')}
                         name="password"
                         autoComplete="password"
                         required
@@ -87,20 +88,20 @@ const LoginPage = () => {
                         value={formik.values.password}
                         isInvalid={error}
                       />
-                      <Form.Label htmlFor="password">Пароль</Form.Label>
+                      <Form.Label htmlFor="password">{t('password')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {error}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button disabled={formik.isSubmitting} type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                    <Button disabled={formik.isSubmitting} type="submit" variant="outline-primary" className="w-100 mb-3">{t('login')}</Button>
                   </Form>
                 </Col>
               </Row>
             </Card.Body>
             <Card.Footer className="p-4">
               <Container className="text-center">
-                <span className="m-1">Нет аккаунта?</span>
-                <a href="/signup">Регистрация</a>
+                <span className="m-1">{t('noAccount')}</span>
+                <Link to="/signup">{t('registration')}</Link>
               </Container>
             </Card.Footer>
           </Card>

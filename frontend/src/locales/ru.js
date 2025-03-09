@@ -30,6 +30,15 @@ export default {
     renameChannel: 'Переименовать канал',
     channelCreated: 'Канал создан',
     channelRenamed: 'Канал переименован',
-    channelRemoved: 'Канал удалён'
+    channelRemoved: 'Канал удалён',
+    registration: 'Регистрация',
+    noAccount: 'Нет аккаунта?',
+    userName: 'Имя пользователя',
+    yourNick: 'Ваш ник',
+    password: 'Пароль',
+    confirmPassword: 'Подтвердите пароль',
+    toRegistrate: 'Зарегестрироваться',
+    atLeastSix: 'Не менее 6 символов',
+    passwordsMustMatch: 'Пароли должны совпадать'
   }
 };
