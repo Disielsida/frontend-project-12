@@ -41,6 +41,7 @@ const LoginPage = () => {
         navigate(redirectPath, { replace: true });
       } catch (e) {
         setError(e);
+      } finally {
         setSubmitting(false);
       }
     }

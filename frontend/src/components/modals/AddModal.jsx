@@ -7,6 +7,7 @@ import {
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 
 import { addChannel, channelsSelectors } from '../../redux/slices/ChannelsSlice';
 
@@ -36,15 +37,29 @@ const AddModal = ({ handleCloseModal }) => {
       name: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      const { name } = values;
-      const channel = { name };
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const { name } = values;
+        const cleanName = leoProfanity.clean(name);
+        const channel = { name: cleanName };
 
-      dispatch(addChannel(channel));
-      handleCloseModal();
-      toast.success(t('modals.addModal.channelCreated'), {
-        autoClose: 3000
-      });
+        if (!navigator.onLine) {
+          throw new Error();
+        }
+
+        await dispatch(addChannel(channel)).unwrap();
+
+        toast.success(t('toastify.channelCreated'), { autoClose: 3000 });
+      } catch (error) {
+        console.error(t('errors.channelNotAdd'), error);
+
+        toast.error(t('toastify.errors.сhannelNotAdd'), {
+          autoClose: 3000
+        });
+      } finally {
+        setSubmitting(false);
+        handleCloseModal();
+      }
     }
   });
 

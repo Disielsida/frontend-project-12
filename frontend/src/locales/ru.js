@@ -57,22 +57,34 @@ export default {
       minMaxRange: 'От 3 до 20 символов',
       mustBeUnique: 'Должно быть уникальным',
       atLeastSix: 'Не менее 6 символов',
-      passwordsMustMatch: 'Пароли должны совпадать'
+      passwordsMustMatch: 'Пароли должны совпадать',
+      channelNotDelete: 'Ошибка при удалении канала: ',
+      channelNotAdd: 'Ошибка при создании канала: ',
+      channelNotRename: 'Ошибка при переименовании канала: '
     },
 
     modals: {
       addModal: {
-        channelCreated: 'Канал создан',
         addChannel: 'Добавить канал'
       },
       removeModal: {
         removeChannel: 'Удалить канал',
-        channelRemoved: 'Канал удалён',
         areYouSure: 'Уверены?'
       },
       renameModal: {
-        renameChannel: 'Переименовать канал',
-        channelRenamed: 'Канал переименован'
+        renameChannel: 'Переименовать канал'
+      }
+    },
+
+    toastify: {
+      channelRenamed: 'Канал переименован',
+      channelRemoved: 'Канал удалён',
+      channelCreated: 'Канал создан',
+      errors: {
+        channelNotAdd: 'Ошибка при создании канала',
+        channelNotDelete: 'Ошибка при удалении канала',
+        channelNotRename: 'Ошибка при переименовании канала',
+        network: 'Соединение с интернетом прервано'
       }
     }
   }

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import {
   Form, InputGroup, Button, Container
 } from 'react-bootstrap';
+import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessage } from '../redux/slices/MessagesSlice.jsx';
@@ -21,7 +22,9 @@ const MessageForm = ({ activeChannelId }) => {
     initialValues: { body: '' },
     validationSchema,
     onSubmit: async (values, { setFieldValue, setTouched }) => {
-      const message = { body: values.body, channelId: activeChannelId, username };
+      const { body } = values;
+      const cleanBody = leoProfanity.clean(body);
+      const message = { body: cleanBody, channelId: activeChannelId, username };
       await dispatch(addMessage(message)).unwrap();
       setFieldValue('body', '');
       setTouched({ body: false });

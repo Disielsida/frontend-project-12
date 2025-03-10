@@ -107,15 +107,9 @@ const channelsSlice = createSlice({
         channelsAdapter.addOne(state, payload);
         socket.emit('newChannel', payload);
       })
-      .addCase(addChannel.rejected, (_, { error }) => {
-        console.error('Ошибка при добавлении канала: ', error);
-      })
       .addCase(removeChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.removeOne(state, payload.id);
         socket.emit('removeChannel', payload);
-      })
-      .addCase(removeChannel.rejected, (_, { error }) => {
-        console.error('Ошибка при удалении канала: ', error);
       })
       .addCase(renameChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.updateOne(state, {
@@ -123,9 +117,6 @@ const channelsSlice = createSlice({
           changes: { name: payload.name }
         });
         socket.emit('renameChannel', payload);
-      })
-      .addCase(renameChannel.rejected, (_, { error }) => {
-        console.error('Ошибка при переименовании канала: ', error);
       });
   }
 });

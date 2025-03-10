@@ -136,7 +136,7 @@ const RegistrationPage = () => {
                       </Form.Control.Feedback>
                     </Form.Group>
                     <Button
-                      disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0}
+                      disabled={formik.isSubmitting}
                       type="submit"
                       variant="outline-primary"
                       className="w-100 mb-3"
