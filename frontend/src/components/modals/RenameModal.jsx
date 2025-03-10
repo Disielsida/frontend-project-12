@@ -39,12 +39,15 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        setSubmitting(false);
+        handleCloseModal();
+        return;
+      }
+
       try {
         const editedChannel = values;
-
-        if (!navigator.onLine) {
-          throw new Error();
-        }
 
         dispatch(renameChannel({ id, editedChannel }));
         toast.success(t('toastify.channelRenamed'), {
@@ -52,10 +55,6 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
         });
       } catch (error) {
         console.error(t('errors.channelNotRename'), error);
-
-        toast.error(t('toastify.errors.channelNotRename'), {
-          autoClose: 3000
-        });
       } finally {
         setSubmitting(false);
         handleCloseModal();

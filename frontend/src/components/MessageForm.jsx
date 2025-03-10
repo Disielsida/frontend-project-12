@@ -7,6 +7,7 @@ import {
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { addMessage } from '../redux/slices/MessagesSlice.jsx';
 
 const MessageForm = ({ activeChannelId }) => {
@@ -22,6 +23,10 @@ const MessageForm = ({ activeChannelId }) => {
     initialValues: { body: '' },
     validationSchema,
     onSubmit: async (values, { setFieldValue, setTouched }) => {
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        return;
+      }
       const { body } = values;
       const cleanBody = leoProfanity.clean(body);
       const message = { body: cleanBody, channelId: activeChannelId, username };

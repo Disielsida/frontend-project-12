@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import routes from '../routes.js';
 import { logIn } from '../redux/slices/AuthSlice.jsx';
 import loginImage from '../images/login.jpg';
@@ -34,8 +35,15 @@ const LoginPage = () => {
       password: ''
     },
     onSubmit: async (values, { setSubmitting }) => {
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        setSubmitting(false);
+        return;
+      }
+
       const { username, password } = values;
       const loginObject = { username, password };
+
       try {
         await dispatch(logIn(loginObject)).unwrap();
         navigate(redirectPath, { replace: true });

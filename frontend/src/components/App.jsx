@@ -3,9 +3,8 @@ import {
 } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -24,31 +23,9 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => {
-  const { t } = useTranslation();
-
   useEffect(() => {
     leoProfanity.loadDictionary('ru');
-
-    const handleOffline = () => {
-      toast.error(t('toastify.errors.network'));
-    };
-
-    const handleOnline = () => {
-      toast.dismiss();
-    };
-
-    window.addEventListener('offline', handleOffline);
-    window.addEventListener('online', handleOnline);
-
-    if (!navigator.onLine) {
-      toast.error(t('toastify.errors.network'));
-    }
-
-    return () => {
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('online', handleOnline);
-    };
-  }, [t]);
+  }, []);
 
   return (
     <Router basename="/">

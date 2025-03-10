@@ -4,6 +4,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { logOut } from '../redux/slices/AuthSlice.jsx';
 import routes from '../routes.js';
 
@@ -13,6 +14,11 @@ const Header = () => {
   const { loggedIn } = useSelector((state) => state.authorization);
 
   const handleLogOut = () => {
+    if (!navigator.onLine) {
+      toast.error(t('toastify.errors.network'));
+      return;
+    }
+
     dispatch(logOut());
   };
 

@@ -38,6 +38,13 @@ const AddModal = ({ handleCloseModal }) => {
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        setSubmitting(false);
+        handleCloseModal();
+        return;
+      }
+
       try {
         const { name } = values;
         const cleanName = leoProfanity.clean(name);
@@ -52,10 +59,6 @@ const AddModal = ({ handleCloseModal }) => {
         toast.success(t('toastify.channelCreated'), { autoClose: 3000 });
       } catch (error) {
         console.error(t('errors.channelNotAdd'), error);
-
-        toast.error(t('toastify.errors.сhannelNotAdd'), {
-          autoClose: 3000
-        });
       } finally {
         setSubmitting(false);
         handleCloseModal();

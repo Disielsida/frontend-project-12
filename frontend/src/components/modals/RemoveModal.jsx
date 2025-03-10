@@ -17,11 +17,14 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
   const formik = useFormik({
     initialValues: {},
     onSubmit: async (_, { setSubmitting }) => {
-      try {
-        if (!navigator.onLine) {
-          throw new Error();
-        }
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        setSubmitting(false);
+        handleCloseModal();
+        return;
+      }
 
+      try {
         await dispatch(removeChannel(id)).unwrap();
 
         toast.success(t('toastify.channelRemoved'), {
@@ -29,10 +32,6 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
         });
       } catch (error) {
         console.error(t('errors.channelNotDelete'), error);
-
-        toast.error(t('toastify.errors.channelNotDelete'), {
-          autoClose: 3000
-        });
       } finally {
         setSubmitting(false);
         handleCloseModal();

@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import routes from '../routes';
 
 import registrationImage from '../images/registration.jpg';
@@ -51,6 +52,12 @@ const RegistrationPage = () => {
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      if (!navigator.onLine) {
+        toast.error(t('toastify.errors.network'));
+        setSubmitting(false);
+        return;
+      }
+
       const { username, password } = values;
       const newUserData = { username, password };
       try {

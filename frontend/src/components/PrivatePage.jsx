@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Container, Row, Col, Stack
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import ChannelsList from './ChannelsList.jsx';
 import MessagesList from './MessagesList.jsx';
@@ -30,6 +32,7 @@ const renderModal = (modalInfo, handleCloseModal) => {
 const PrivatePage = () => {
   useSocket();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
 
@@ -37,9 +40,14 @@ const PrivatePage = () => {
   const handleCloseModal = () => setModalInfo({ type: null, task: null });
 
   useEffect(() => {
+    if (!navigator.onLine) {
+      toast.error(t('toastify.errors.network'));
+      return;
+    }
+
     dispatch(fetchChannels());
     dispatch(fetchMessages());
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   const channels = useSelector(channelsSelectors.selectAll);
   const activeChannelId = useSelector((state) => state.channels.activeChannelId);
