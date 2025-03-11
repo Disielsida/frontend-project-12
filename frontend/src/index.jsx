@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import { useEffect } from 'react';
 import store from './redux/index.jsx';
 import initI18n from './initI18n.jsx';
 import App from './components/App';
