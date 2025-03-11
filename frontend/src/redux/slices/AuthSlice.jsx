@@ -51,10 +51,18 @@ const AuthSlice = createSlice({
   name: 'authorization',
   initialState:
     {
-      loggedIn: localStorage.getItem('authToken') !== null,
-      username: localStorage.getItem('username') || null
+      token: null,
+      loggedIn: false,
+      username: null
     },
-  reducers: {},
+  reducers: {
+    setUser: (state, { payload }) => {
+      const { loggedIn, username, token } = payload;
+      state.token = token;
+      state.loggedIn = loggedIn;
+      state.username = username;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logOut.fulfilled, (state) => {
@@ -65,6 +73,7 @@ const AuthSlice = createSlice({
         console.error('Ошибка при выходе из профиля: ', error);
       })
       .addCase(logIn.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
         state.loggedIn = true;
         state.username = payload.username;
       })
@@ -72,6 +81,7 @@ const AuthSlice = createSlice({
         console.error('Ошибка при авторизации: ', error);
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
+        state.token = null;
         state.loggedIn = true;
         state.username = payload.username;
       })
@@ -81,4 +91,5 @@ const AuthSlice = createSlice({
   }
 });
 
+export const { actions } = AuthSlice;
 export default AuthSlice.reducer;

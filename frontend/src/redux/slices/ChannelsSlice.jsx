@@ -7,8 +7,8 @@ import socket from '../../socket.js';
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
-  async () => {
-    const token = localStorage.getItem('authToken');
+  async (_, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.get(routes.channelsPath(), {
       headers: {
@@ -21,42 +21,45 @@ export const fetchChannels = createAsyncThunk(
 
 export const addChannel = createAsyncThunk(
   'channels/addChannel',
-  async (channel) => {
-    const token = localStorage.getItem('authToken');
+  async (channel, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.post(routes.channelsPath(), channel, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+    socket.emit('newChannel', response.data);
     return response.data;
   }
 );
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (id) => {
-    const token = localStorage.getItem('authToken');
+  async (id, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.delete(routes.removeOrRenameChannelPath(id), {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+    socket.emit('removeChannel', response.data);
     return response.data;
   }
 );
 
 export const renameChannel = createAsyncThunk(
   'channels/renameChannel',
-  async ({ id, editedChannel }) => {
-    const token = localStorage.getItem('authToken');
+  async ({ id, editedChannel }, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.patch(routes.removeOrRenameChannelPath(id), editedChannel, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+    socket.emit('renameChannel', response.data);
     return response.data;
   }
 );
@@ -75,7 +78,10 @@ const channelsSlice = createSlice({
     addSocketChannel: channelsAdapter.addOne,
     removeSocketChannel(state, { payload }) {
       channelsAdapter.removeOne(state, payload);
-      state.activeChannelId = state.ids.length > 0 ? state.ids[0] : null;
+
+      if (state.activeChannelId === payload) {
+        state.activeChannelId = state.ids.length > 0 ? state.ids[0] : null;
+      }
     },
     renameSocketChannel(state, { payload }) {
       channelsAdapter.updateOne(state, {
@@ -105,18 +111,15 @@ const channelsSlice = createSlice({
       })
       .addCase(addChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.addOne(state, payload);
-        socket.emit('newChannel', payload);
       })
       .addCase(removeChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.removeOne(state, payload.id);
-        socket.emit('removeChannel', payload);
       })
       .addCase(renameChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.updateOne(state, {
           id: payload.id,
           changes: { name: payload.name }
         });
-        socket.emit('renameChannel', payload);
       });
   }
 });

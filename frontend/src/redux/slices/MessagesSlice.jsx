@@ -9,8 +9,8 @@ import { actions as channelsActions } from './ChannelsSlice.jsx';
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async () => {
-    const token = localStorage.getItem('authToken');
+  async (_, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.get(routes.messagesPath(), {
       headers: {
@@ -24,14 +24,16 @@ export const fetchMessages = createAsyncThunk(
 
 export const addMessage = createAsyncThunk(
   'messages/addMessage',
-  async (message) => {
-    const token = localStorage.getItem('authToken');
+  async (message, { getState }) => {
+    const { token } = getState().authorization;
 
     const response = await axios.post(routes.messagesPath(), message, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+
+    socket.emit('newMessage', response.data);
 
     return response.data;
   }
@@ -60,7 +62,6 @@ const messagesSlice = createSlice({
       })
       .addCase(addMessage.fulfilled, (state, { payload }) => {
         messagesAdapter.addOne(state, payload);
-        socket.emit('newMessage', payload);
       })
       .addCase(addMessage.rejected, (_, { error }) => {
         console.error('Ошибка при добавлении сообщения: ', error);

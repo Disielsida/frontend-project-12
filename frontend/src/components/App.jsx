@@ -4,7 +4,7 @@ import {
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import leoProfanity from 'leo-profanity';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -12,6 +12,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
 import routes from '../routes.js';
+import { actions as authActions } from '../redux/slices/AuthSlice.jsx';
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
@@ -23,9 +24,18 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     leoProfanity.loadDictionary('ru');
-  }, []);
+
+    const token = localStorage.getItem('authToken');
+    const username = localStorage.getItem('username');
+
+    if (token) {
+      dispatch(authActions.setUser({ token, loggedIn: !!token, username }));
+    }
+  }, [dispatch]);
 
   return (
     <Router basename="/">
