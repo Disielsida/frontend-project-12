@@ -81,12 +81,9 @@ const AuthSlice = createSlice({
         console.error('Ошибка при авторизации: ', error);
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
-        state.token = null;
+        state.token = payload.token;
         state.loggedIn = true;
         state.username = payload.username;
-      })
-      .addCase(signUp.rejected, (_, { error }) => {
-        console.error('Ошибка при регистрации: ', error);
       });
   }
 });

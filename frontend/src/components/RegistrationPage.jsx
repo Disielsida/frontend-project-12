@@ -65,7 +65,6 @@ const RegistrationPage = () => {
         navigate(redirectPath, { replace: true });
       } catch (e) {
         setNetworkError(e);
-        console.log(networkError);
         setSubmitting(false);
       }
     }
@@ -94,7 +93,10 @@ const RegistrationPage = () => {
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         value={formik.values.username}
-                        isInvalid={formik.touched.username && !!formik.errors.username}
+                        isInvalid={
+                          formik.touched.username
+                          && (!!formik.errors.username || !!networkError)
+                        }
                         ref={formControlRef}
                       />
                       <Form.Label htmlFor="username">{t('placeholders.userName')}</Form.Label>
@@ -114,7 +116,10 @@ const RegistrationPage = () => {
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        isInvalid={formik.touched.password && !!formik.errors.password}
+                        isInvalid={
+                          formik.touched.password
+                          && (!!formik.errors.password || !!networkError)
+                        }
                       />
                       <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
@@ -134,12 +139,13 @@ const RegistrationPage = () => {
                         onChange={formik.handleChange}
                         value={formik.values.confirmPassword}
                         isInvalid={
-                          formik.touched.confirmPassword && !!formik.errors.confirmPassword
+                          formik.touched.confirmPassword
+                          && (!!formik.errors.confirmPassword || networkError)
                         }
                       />
                       <Form.Label htmlFor="password">{t('placeholders.confirmPassword')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
-                        {formik.errors.confirmPassword}
+                        {formik.errors.confirmPassword || networkError}
                       </Form.Control.Feedback>
                     </Form.Group>
                     <Button
