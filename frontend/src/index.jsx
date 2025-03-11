@@ -12,13 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import rollbarConfig from './rollbarConfig.js';
 
-const TestError = () => {
-  useEffect(() => {
-    throw new Error('Test Error');
-  }, []);
-  return null;
-};
-
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));
   const i18n = await initI18n();
@@ -29,7 +22,6 @@ const app = async () => {
         <Provider store={store}>
           <I18nextProvider i18n={i18n}>
             <App />
-            <TestError />
           </I18nextProvider>
         </Provider>
       </ErrorBoundary>
