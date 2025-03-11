@@ -35,5 +35,20 @@ You can check out the live version of the project at the following [link](https:
 ### Modals
 ![Modals](./frontend/src/images/Modals.png)
 
-### Authorization
+### Main page
 ![Main Page](./frontend/src/images/mainPage.png)
+
+## Local Setup
+To run the project locally, follow these steps:
+
+1. Clone the repository:
+
+   <pre><code>git clone https://github.com/Disielsida/frontend-project-12.git</code></pre>
+
+2. Install dependencies:
+
+   <pre><code>make install</code></pre>
+
+3. Start the development server:
+
+   <pre><code>make develop</code></pre>
