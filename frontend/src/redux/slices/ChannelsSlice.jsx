@@ -111,6 +111,9 @@ const channelsSlice = createSlice({
       })
       .addCase(addChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.addOne(state, payload);
+
+        const { id } = payload;
+        state.activeChannelId = id;
       })
       .addCase(removeChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.removeOne(state, payload.id);
