@@ -1,5 +1,3 @@
-root: true
-
 env:
   browser: true
   es2021: true
@@ -7,13 +5,13 @@ env:
 extends:
   - airbnb
   - plugin:react/recommended
-  - plugin:react-hooks/recommended
   - plugin:functional/recommended
+  - plugin:react-hooks/recommended
 
 parserOptions:
   ecmaFeatures:
     jsx: true
-  ecmaVersion: 2021
+  ecmaVersion: latest
   sourceType: module
 
 plugins:
@@ -37,5 +35,3 @@ rules:
   react/function-component-definition: [2, { "namedComponents": "arrow-function" }]
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
-  no-unused-vars: [2, { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
-  no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]

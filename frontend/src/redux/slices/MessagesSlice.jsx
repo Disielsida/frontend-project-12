@@ -54,8 +54,13 @@ const messagesSlice = createSlice({
           { ...accumulator, [message.id]: message }
         ), {});
 
-        state.entities = messagesSortedById;
-        state.ids = Object.keys(messagesSortedById);
+        const newState = {
+          ...state,
+          entities: messagesSortedById,
+          ids: Object.keys(messagesSortedById),
+        };
+
+        return newState;
       })
       .addCase(fetchMessages.rejected, (_, { error }) => {
         console.error('Ошибка при загрузке сообщений: ', error);

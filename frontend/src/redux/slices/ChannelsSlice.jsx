@@ -73,15 +73,21 @@ const channelsSlice = createSlice({
   }),
   reducers: {
     setActiveChannel(state, { payload }) {
-      state.activeChannelId = payload;
+      return {
+        ...state,
+        activeChannelId: payload,
+      };
     },
     addSocketChannel: channelsAdapter.addOne,
     removeSocketChannel(state, { payload }) {
-      channelsAdapter.removeOne(state, payload);
+      const newState = { ...state };
+      channelsAdapter.removeOne(newState, payload);
 
-      if (state.activeChannelId === payload) {
-        state.activeChannelId = state.ids.length > 0 ? state.ids[0] : null;
+      if (newState.activeChannelId === payload) {
+        newState.activeChannelId = newState.ids.length > 0 ? newState.ids[0] : null;
       }
+
+      return newState;
     },
     renameSocketChannel(state, { payload }) {
       channelsAdapter.updateOne(state, {
@@ -97,23 +103,30 @@ const channelsSlice = createSlice({
           { ...accumulator, [channel.id]: channel }
         ), {});
 
-        state.entities = channelsSortedById;
-        state.ids = Object.keys(channelsSortedById);
+        const newState = {
+          ...state,
+          entities: channelsSortedById,
+          ids: Object.keys(channelsSortedById),
+        };
 
-        const [firstChannelId] = state.ids;
+        const [firstChannelId] = newState.ids;
 
-        if (!state.activeChannelId && state.ids.length > 0) {
-          state.activeChannelId = firstChannelId;
+        if (!newState.activeChannelId && newState.ids.length > 0) {
+          newState.activeChannelId = firstChannelId;
         }
+
+        return newState;
       })
       .addCase(fetchChannels.rejected, (_, { error }) => {
         console.error('Ошибка при загрузке каналов: ', error);
       })
       .addCase(addChannel.fulfilled, (state, { payload }) => {
-        channelsAdapter.addOne(state, payload);
+        const newState = { ...state };
+        channelsAdapter.addOne(newState, payload);
 
-        const { id } = payload;
-        state.activeChannelId = id;
+        newState.activeChannelId = payload.id;
+
+        return newState;
       })
       .addCase(removeChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.removeOne(state, payload.id);

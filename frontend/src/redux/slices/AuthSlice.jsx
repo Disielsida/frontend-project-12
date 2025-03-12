@@ -56,35 +56,38 @@ const AuthSlice = createSlice({
       username: null,
     },
   reducers: {
-    setUser: (state, { payload }) => {
-      const { loggedIn, username, token } = payload;
-      state.token = token;
-      state.loggedIn = loggedIn;
-      state.username = username;
-    },
+    setUser: (state, { payload }) => ({
+      ...state,
+      token: payload.token,
+      loggedIn: payload.loggedIn,
+      username: payload.username,
+    }),
   },
   extraReducers: (builder) => {
     builder
-      .addCase(logOut.fulfilled, (state) => {
-        state.loggedIn = false;
-        state.username = null;
-      })
+      .addCase(logOut.fulfilled, (state) => ({
+        ...state,
+        loggedIn: false,
+        username: null,
+      }))
       .addCase(logOut.rejected, (_, { error }) => {
         console.error('Ошибка при выходе из профиля: ', error);
       })
-      .addCase(logIn.fulfilled, (state, { payload }) => {
-        state.token = payload.token;
-        state.loggedIn = true;
-        state.username = payload.username;
-      })
+      .addCase(logIn.fulfilled, (state, { payload }) => ({
+        ...state,
+        token: payload.token,
+        loggedIn: true,
+        username: payload.username,
+      }))
       .addCase(logIn.rejected, (_, { error }) => {
         console.error('Ошибка при авторизации: ', error);
       })
-      .addCase(signUp.fulfilled, (state, { payload }) => {
-        state.token = payload.token;
-        state.loggedIn = true;
-        state.username = payload.username;
-      });
+      .addCase(signUp.fulfilled, (state, { payload }) => ({
+        ...state,
+        token: payload.token,
+        loggedIn: true,
+        username: payload.username,
+      }));
   },
 });
 
