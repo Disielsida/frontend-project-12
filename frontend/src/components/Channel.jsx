@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChannel }) => (
   <Button
     variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
-    className="w-100 rounded-0 text-start"
+    className="w-100 rounded-0 text-start text-truncate"
     onClick={() => handleSetActiveChannel(channelData.id)}
     aria-label={channelData.name}
   >
@@ -23,7 +23,7 @@ const Channel = ({
   return (
     <Nav.Item className="w-100">
       {channelData.removable ? (
-        <ButtonGroup as="div" role="group" className="d-flex dropdown btn-group">
+        <ButtonGroup as="div" role="group" className="d-flex dropdown">
           <BaseChannelButton
             channelData={channelData}
             activeChannelId={activeChannelId}
@@ -31,9 +31,7 @@ const Channel = ({
           />
           <DropdownButton
             variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
-            className="flex-grow-0"
-            id={`dropdown-${channelData.id}`}
-            style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+            className="flex-grow-0 rounded-end customDropdown"
             title={<span className="visually-hidden">{t('placeholders.channelManagement')}</span>}
           >
             <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>{t('channelsList.channel.delete')}</Dropdown.Item>

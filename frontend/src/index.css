@@ -31,3 +31,6 @@ code {
   z-index: 10;
 }
 
+.customDropdown .dropdown-toggle {
+  border-radius: 0 15% 15% 0;
+}
