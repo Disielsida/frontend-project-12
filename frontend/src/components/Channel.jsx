@@ -7,7 +7,7 @@ const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChanne
     variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
     className="w-100 rounded-0 text-start"
     onClick={() => handleSetActiveChannel(channelData.id)}
-    name={channelData.name}
+    aria-label={channelData.name}
   >
     <span className="me-1">#</span>
     {channelData.name}
