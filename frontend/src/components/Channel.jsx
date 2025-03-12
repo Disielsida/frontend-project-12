@@ -1,5 +1,5 @@
 import {
-  Nav, Button, ButtonGroup, Dropdown
+  Nav, Button, ButtonGroup, Dropdown, DropdownButton
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -29,21 +29,16 @@ const Channel = ({
             activeChannelId={activeChannelId}
             handleSetActiveChannel={handleSetActiveChannel}
           />
-          <Dropdown>
-            <Dropdown.Toggle
-              variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
-              className="flex-grow-0 dropdown-toggle-split"
-              id={`dropdown-${channelData.id}`}
-              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-              aria-label={t('placeholders.channelManagement')}
-            />
-            <span className="visually-hidden">{t('placeholders.channelManagement')}</span>
-
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>{t('channelsList.channel.delete')}</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleOpenModal('renaming', channelData)}>{t('channelsList.channel.rename')}</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <DropdownButton
+            variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
+            className="flex-grow-0"
+            id={`dropdown-${channelData.id}`}
+            style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+            title={<span className="visually-hidden">{t('placeholders.channelManagement')}</span>}
+          >
+            <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>{t('channelsList.channel.delete')}</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleOpenModal('renaming', channelData)}>{t('channelsList.channel.rename')}</Dropdown.Item>
+          </DropdownButton>
         </ButtonGroup>
       ) : (
         <BaseChannelButton
