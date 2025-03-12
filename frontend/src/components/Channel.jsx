@@ -9,7 +9,7 @@ const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChanne
     onClick={() => handleSetActiveChannel(channelData.id)}
     aria-label={channelData.name}
   >
-    <span className="me-1">#</span>
+    <span className="me-1" aria-hidden="true">#</span>
     {channelData.name}
   </Button>
 );
