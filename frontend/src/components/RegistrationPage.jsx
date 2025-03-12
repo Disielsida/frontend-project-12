@@ -132,7 +132,7 @@ const RegistrationPage = () => {
                         type="password"
                         placeholder={t('placeholders.confirmPassword')}
                         name="confirmPassword"
-                        autoComplete="password"
+                        autoComplete="confirmPassword"
                         required
                         id="confirmPassword"
                         onBlur={formik.handleBlur}
