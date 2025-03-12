@@ -5,7 +5,7 @@ import RenameModal from './RenameModal.jsx';
 const modals = {
   adding: AddModal,
   removing: RemoveModal,
-  renaming: RenameModal
+  renaming: RenameModal,
 };
 
 export default modals;

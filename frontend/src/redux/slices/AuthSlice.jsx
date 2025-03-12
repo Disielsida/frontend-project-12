@@ -17,7 +17,7 @@ export const logIn = createAsyncThunk(
 
       return error;
     }
-  }
+  },
 );
 
 export const logOut = createAsyncThunk(
@@ -26,7 +26,7 @@ export const logOut = createAsyncThunk(
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
     return {};
-  }
+  },
 );
 
 export const signUp = createAsyncThunk(
@@ -44,7 +44,7 @@ export const signUp = createAsyncThunk(
 
       return error;
     }
-  }
+  },
 );
 
 const AuthSlice = createSlice({
@@ -53,7 +53,7 @@ const AuthSlice = createSlice({
     {
       token: null,
       loggedIn: false,
-      username: null
+      username: null,
     },
   reducers: {
     setUser: (state, { payload }) => {
@@ -61,7 +61,7 @@ const AuthSlice = createSlice({
       state.token = token;
       state.loggedIn = loggedIn;
       state.username = username;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,7 +85,7 @@ const AuthSlice = createSlice({
         state.loggedIn = true;
         state.username = payload.username;
       });
-  }
+  },
 });
 
 export const { actions } = AuthSlice;

@@ -7,7 +7,7 @@ const routes = {
   signupPath: () => '/api/v1/signup',
   chatsPagePath: () => '/',
   loginPagePath: () => '/login',
-  signupPagePath: () => '/signup'
+  signupPagePath: () => '/signup',
 };
 
 export default routes;

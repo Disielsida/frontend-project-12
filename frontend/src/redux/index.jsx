@@ -7,8 +7,8 @@ const store = configureStore({
   reducer: {
     authorization: authReducer,
     channels: channelsReducer,
-    messages: messagesReducer
-  }
+    messages: messagesReducer,
+  },
 });
 
 export default store;

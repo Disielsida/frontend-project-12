@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import {
-  Modal, Form, Button
+  Modal, Form, Button,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
         await dispatch(removeChannel(id)).unwrap();
 
         toast.success(t('toastify.channelRemoved'), {
-          autoClose: 3000
+          autoClose: 3000,
         });
       } catch (error) {
         console.error(t('errors.channelNotDelete'), error);
@@ -36,7 +36,7 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
         setSubmitting(false);
         handleCloseModal();
       }
-    }
+    },
   });
 
   return (

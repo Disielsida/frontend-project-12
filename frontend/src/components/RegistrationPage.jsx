@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Container, Row, Col, Card, Image, Form, Button
+  Container, Row, Col, Card, Image, Form, Button,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -41,14 +41,14 @@ const RegistrationPage = () => {
       .min(6, t('errors.atLeastSix')),
     confirmPassword: Yup.string()
       .required(t('errors.RequiredField'))
-      .oneOf([Yup.ref('password'), null], t('errors.passwordsMustMatch'))
+      .oneOf([Yup.ref('password'), null], t('errors.passwordsMustMatch')),
   });
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -67,7 +67,7 @@ const RegistrationPage = () => {
         setNetworkError(e);
         setSubmitting(false);
       }
-    }
+    },
   });
 
   return (

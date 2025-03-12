@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
-  Modal, FormGroup, FormControl, Form, Button
+  Modal, FormGroup, FormControl, Form, Button,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -29,12 +29,12 @@ const AddModal = ({ handleCloseModal }) => {
       .required(t('errors.RequiredField'))
       .min(3, t('errors.minMaxRange'))
       .max(20, t('errors.minMaxRange'))
-      .notOneOf(channelsNames, t('errors.mustBeUnique'))
+      .notOneOf(channelsNames, t('errors.mustBeUnique')),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: ''
+      name: '',
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -63,7 +63,7 @@ const AddModal = ({ handleCloseModal }) => {
         setSubmitting(false);
         handleCloseModal();
       }
-    }
+    },
   });
 
   return (

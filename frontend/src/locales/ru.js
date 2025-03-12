@@ -2,13 +2,13 @@ export default {
   translation: {
     header: {
       brand: 'Hexlet Chat',
-      exit: 'Выйти'
+      exit: 'Выйти',
     },
 
     loginPage: {
       login: 'Войти',
       noAccount: 'Нет аккаунта?',
-      registration: 'Регистрация'
+      registration: 'Регистрация',
     },
 
     placeholders: {
@@ -18,7 +18,7 @@ export default {
       userName: 'Имя пользователя',
       confirmPassword: 'Подтвердите пароль',
       channelName: 'Имя канала',
-      channelManagement: 'Управление каналом'
+      channelManagement: 'Управление каналом',
     },
 
     buttons: {
@@ -27,34 +27,34 @@ export default {
       send: 'Отправить',
       toRegistrate: 'Зарегестрироваться',
       cancel: 'Отменить',
-      delete: 'Удалить'
+      delete: 'Удалить',
     },
 
     notFoundPage: {
       notFound: 'Страница не найдена',
       butYouCanGo: 'Но вы можете перейти',
-      onMainPage: 'на главную страницу'
+      onMainPage: 'на главную страницу',
     },
 
     channelsList: {
       channels: 'Каналы',
       channel: {
         delete: 'Удалить',
-        rename: 'Переименовать'
-      }
+        rename: 'Переименовать',
+      },
     },
 
     messagesList: {
       messages: {
         count_one: '{{count}} сообщение',
         count_few: '{{count}} сообщения',
-        count_many: '{{count}} сообщений'
+        count_many: '{{count}} сообщений',
       },
-      newMessage: 'Новое сообщение'
+      newMessage: 'Новое сообщение',
     },
 
     registrationPage: {
-      registration: 'Регистрация'
+      registration: 'Регистрация',
     },
 
     errors: {
@@ -66,20 +66,20 @@ export default {
       passwordsMustMatch: 'Пароли должны совпадать',
       channelNotDelete: 'Ошибка при удалении канала: ',
       channelNotAdd: 'Ошибка при создании канала: ',
-      channelNotRename: 'Ошибка при переименовании канала: '
+      channelNotRename: 'Ошибка при переименовании канала: ',
     },
 
     modals: {
       addModal: {
-        addChannel: 'Добавить канал'
+        addChannel: 'Добавить канал',
       },
       removeModal: {
         removeChannel: 'Удалить канал',
-        areYouSure: 'Уверены?'
+        areYouSure: 'Уверены?',
       },
       renameModal: {
-        renameChannel: 'Переименовать канал'
-      }
+        renameChannel: 'Переименовать канал',
+      },
     },
 
     toastify: {
@@ -90,8 +90,8 @@ export default {
         channelNotAdd: 'Ошибка при создании канала',
         channelNotDelete: 'Ошибка при удалении канала',
         channelNotRename: 'Ошибка при переименовании канала',
-        network: 'Соединение с интернетом прервано'
-      }
-    }
-  }
+        network: 'Соединение с интернетом прервано',
+      },
+    },
+  },
 };

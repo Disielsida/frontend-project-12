@@ -1,5 +1,5 @@
 import {
-  Nav, Button, ButtonGroup, Dropdown, DropdownButton
+  Nav, Button, ButtonGroup, Dropdown, DropdownButton,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +16,7 @@ const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChanne
 );
 
 const Channel = ({
-  channelData, activeChannelId, handleSetActiveChannel, handleOpenModal
+  channelData, activeChannelId, handleSetActiveChannel, handleOpenModal,
 }) => {
   const { t } = useTranslation();
 

@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import * as Yup from 'yup';
 import {
-  Form, InputGroup, Button, Container
+  Form, InputGroup, Button, Container,
 } from 'react-bootstrap';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ const MessageForm = ({ activeChannelId }) => {
   const username = useSelector((state) => state.authorization.username);
 
   const validationSchema = Yup.object({
-    body: Yup.string().trim().required(t('errors.emptyMessage'))
+    body: Yup.string().trim().required(t('errors.emptyMessage')),
   });
 
   const formik = useFormik({
@@ -33,7 +33,7 @@ const MessageForm = ({ activeChannelId }) => {
       await dispatch(addMessage(message)).unwrap();
       setFieldValue('body', '');
       setTouched({ body: false });
-    }
+    },
   });
 
   const { resetForm } = formik;

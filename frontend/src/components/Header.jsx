@@ -1,5 +1,5 @@
 import {
-  Navbar, Container, Button
+  Navbar, Container, Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';

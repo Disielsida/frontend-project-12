@@ -12,11 +12,11 @@ export const fetchChannels = createAsyncThunk(
 
     const response = await axios.get(routes.channelsPath(), {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
-  }
+  },
 );
 
 export const addChannel = createAsyncThunk(
@@ -26,12 +26,12 @@ export const addChannel = createAsyncThunk(
 
     const response = await axios.post(routes.channelsPath(), channel, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     socket.emit('newChannel', response.data);
     return response.data;
-  }
+  },
 );
 
 export const removeChannel = createAsyncThunk(
@@ -41,12 +41,12 @@ export const removeChannel = createAsyncThunk(
 
     const response = await axios.delete(routes.removeOrRenameChannelPath(id), {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     socket.emit('removeChannel', response.data);
     return response.data;
-  }
+  },
 );
 
 export const renameChannel = createAsyncThunk(
@@ -56,12 +56,12 @@ export const renameChannel = createAsyncThunk(
 
     const response = await axios.patch(routes.removeOrRenameChannelPath(id), editedChannel, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     socket.emit('renameChannel', response.data);
     return response.data;
-  }
+  },
 );
 
 const channelsAdapter = createEntityAdapter();
@@ -69,7 +69,7 @@ const channelsAdapter = createEntityAdapter();
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: channelsAdapter.getInitialState({
-    activeChannelId: null
+    activeChannelId: null,
   }),
   reducers: {
     setActiveChannel(state, { payload }) {
@@ -86,9 +86,9 @@ const channelsSlice = createSlice({
     renameSocketChannel(state, { payload }) {
       channelsAdapter.updateOne(state, {
         id: payload.id,
-        changes: { name: payload.name }
+        changes: { name: payload.name },
       });
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -121,10 +121,10 @@ const channelsSlice = createSlice({
       .addCase(renameChannel.fulfilled, (state, { payload }) => {
         channelsAdapter.updateOne(state, {
           id: payload.id,
-          changes: { name: payload.name }
+          changes: { name: payload.name },
         });
       });
-  }
+  },
 });
 
 export const { actions } = channelsSlice;

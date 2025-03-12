@@ -14,12 +14,12 @@ export const fetchMessages = createAsyncThunk(
 
     const response = await axios.get(routes.messagesPath(), {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return response.data;
-  }
+  },
 );
 
 export const addMessage = createAsyncThunk(
@@ -29,14 +29,14 @@ export const addMessage = createAsyncThunk(
 
     const response = await axios.post(routes.messagesPath(), message, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     socket.emit('newMessage', response.data);
 
     return response.data;
-  }
+  },
 );
 
 const messagesAdapter = createEntityAdapter();
@@ -45,7 +45,7 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState: messagesAdapter.getInitialState(),
   reducers: {
-    addSocketMessage: messagesAdapter.addOne
+    addSocketMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
     builder
@@ -73,7 +73,7 @@ const messagesSlice = createSlice({
 
         messagesAdapter.removeMany(state, filtredMessagesIds);
       });
-  }
+  },
 });
 
 export const { actions } = messagesSlice;

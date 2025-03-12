@@ -1,5 +1,5 @@
 import {
-  Container, Row, Col, Card, Image, Form, Button
+  Container, Row, Col, Card, Image, Form, Button,
 } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +32,7 @@ const LoginPage = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
-      password: ''
+      password: '',
     },
     onSubmit: async (values, { setSubmitting }) => {
       if (!navigator.onLine) {
@@ -52,7 +52,7 @@ const LoginPage = () => {
       } finally {
         setSubmitting(false);
       }
-    }
+    },
   });
 
   return (

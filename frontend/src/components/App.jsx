@@ -1,5 +1,5 @@
 import {
-  BrowserRouter as Router, Routes, Route, Navigate, useLocation
+  BrowserRouter as Router, Routes, Route, Navigate, useLocation,
 } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';

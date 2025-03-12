@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Channel from './Channel.jsx';
 
 const ChannelsList = ({
-  channels, activeChannelId, handleSetActiveChannel, handleOpenModal
+  channels, activeChannelId, handleSetActiveChannel, handleOpenModal,
 }) => {
   const { t } = useTranslation();
 
