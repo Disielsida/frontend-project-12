@@ -36,7 +36,7 @@ const Channel = ({
               id={`dropdown-${channelData.id}`}
               style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
             />
-            <span className="visually-hidden">{t('placehaolders.channelManagement')}</span>
+            <span className="visually-hidden">{t('placeholders.channelManagement')}</span>
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>{t('channelsList.channel.delete')}</Dropdown.Item>
