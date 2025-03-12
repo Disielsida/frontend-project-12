@@ -35,6 +35,7 @@ const Channel = ({
               className="flex-grow-0 dropdown-toggle-split"
               id={`dropdown-${channelData.id}`}
               style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+              aria-label={t('placeholders.channelManagement')}
             />
             <span className="visually-hidden">{t('placeholders.channelManagement')}</span>
 
