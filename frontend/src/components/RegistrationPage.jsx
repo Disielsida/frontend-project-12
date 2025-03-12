@@ -121,7 +121,7 @@ const RegistrationPage = () => {
                           && (!!formik.errors.password || !!networkError)
                         }
                       />
-                      <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
+                      <Form.Label htmlFor="суауау">{t('placeholders.password')}</Form.Label>
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {formik.errors.password}
                       </Form.Control.Feedback>
