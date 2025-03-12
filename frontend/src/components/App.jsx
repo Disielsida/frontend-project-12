@@ -27,7 +27,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    leoProfanity.loadDictionary('ru');
+    leoProfanity.add([...leoProfanity.getDictionary('ru'), ...leoProfanity.getDictionary('en')]);
 
     const token = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');

@@ -83,6 +83,7 @@ const AddModal = ({ handleCloseModal }) => {
               ref={formControlRef}
               isInvalid={formik.submitCount > 0 && !!formik.errors.name}
             />
+            <Form.Label className="visually-hidden">{t('placeholders.channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
           </FormGroup>
           <div className="d-flex justify-content-end mt-3">

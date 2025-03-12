@@ -16,7 +16,9 @@ export default {
       password: 'Пароль',
       messageControl: 'Введите сообщение...',
       userName: 'Имя пользователя',
-      confirmPassword: 'Подтвердите пароль'
+      confirmPassword: 'Подтвердите пароль',
+      channelName: 'Имя канала',
+      channelManagement: 'Управление каналом'
     },
 
     buttons: {
@@ -35,7 +37,11 @@ export default {
     },
 
     channelsList: {
-      channels: 'Каналы'
+      channels: 'Каналы',
+      channel: {
+        delete: 'Удалить',
+        rename: 'Переименовать'
+      }
     },
 
     messagesList: {

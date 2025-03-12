@@ -1,6 +1,7 @@
 import {
   Nav, Button, ButtonGroup, Dropdown
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChannel }) => (
   <Button
@@ -16,38 +17,42 @@ const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChanne
 
 const Channel = ({
   channelData, activeChannelId, handleSetActiveChannel, handleOpenModal
-}) => (
-  <Nav.Item className="w-100">
-    {channelData.removable ? (
-      <ButtonGroup as="div" role="group" className="d-flex dropdown btn-group">
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Nav.Item className="w-100">
+      {channelData.removable ? (
+        <ButtonGroup as="div" role="group" className="d-flex dropdown btn-group">
+          <BaseChannelButton
+            channelData={channelData}
+            activeChannelId={activeChannelId}
+            handleSetActiveChannel={handleSetActiveChannel}
+          />
+          <Dropdown>
+            <Dropdown.Toggle
+              variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
+              className="flex-grow-0 dropdown-toggle-split"
+              id={`dropdown-${channelData.id}`}
+              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+            />
+            <span className="visually-hidden">{t('placehaolders.channelManagement')}</span>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>{t('channelsList.channel.delete')}</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleOpenModal('renaming', channelData)}>{t('channelsList.channel.rename')}</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </ButtonGroup>
+      ) : (
         <BaseChannelButton
           channelData={channelData}
           activeChannelId={activeChannelId}
           handleSetActiveChannel={handleSetActiveChannel}
         />
-        <Dropdown>
-          <Dropdown.Toggle
-            variant={activeChannelId === channelData.id ? 'secondary' : 'light'}
-            className="flex-grow-0 dropdown-toggle-split"
-            id={`dropdown-${channelData.id}`}
-            style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-          />
-          <span className="visually-hidden">Управление каналом</span>
-
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => handleOpenModal('removing', channelData)}>Удалить</Dropdown.Item>
-            <Dropdown.Item onClick={() => handleOpenModal('renaming', channelData)}>Переименовать</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </ButtonGroup>
-    ) : (
-      <BaseChannelButton
-        channelData={channelData}
-        activeChannelId={activeChannelId}
-        handleSetActiveChannel={handleSetActiveChannel}
-      />
-    )}
-  </Nav.Item>
-);
+      )}
+    </Nav.Item>
+  );
+};
 
 export default Channel;
