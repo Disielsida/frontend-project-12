@@ -50,7 +50,7 @@ const MessageForm = ({ activeChannelId }) => {
             onChange={formik.handleChange}
             value={formik.values.body}
             name="body"
-            aria-label={t('messageList.newMessage')}
+            aria-label={t('messagesList.newMessage')}
             placeholder={t('placeholders.messageControl')}
             className="border-0 p-0 ps-2 form-control"
             isInvalid={!!formik.errors.body}
