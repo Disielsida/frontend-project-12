@@ -20,7 +20,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const { loggedIn } = useSelector((state) => state.authorization);
-  const redirectPath = location.state?.from?.pathname || routes.chatsPath();
+  const redirectPath = location.state?.from?.pathname || routes.chatsPagePath();
 
   useEffect(() => {
     if (loggedIn) {

@@ -38,7 +38,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <Router basename="/">
+    <Router>
       <Container fluid className="d-flex flex-column h-100 p-0">
         <Header />
         <Routes>
