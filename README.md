@@ -4,12 +4,11 @@ This project is the development of a simplified analogue of Slack chat using mod
 ## Demo
 You can check out the live version of the project at the following [link](https://slack-chat-rxfy.onrender.com).
 
-## Hexlet tests and linter status:
-[![Actions Status](https://github.com/Disielsida/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions)
-
-[![project-check](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml)
-
+## Hexlet tests, linter status and maintainability:
+[![Actions Status](https://github.com/Disielsida/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions/workflows/hexlet-check.yml)  
+[![project-check](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml)  
 [![Maintainability](https://qlty.sh/badges/80c8fd89-56d8-4b07-88f5-c9773f00ad18/maintainability.svg)](https://qlty.sh/gh/Disielsida/projects/frontend-project-12)
+
 
 ## Technologies Used
 - **React** — Hooks, context, optimization
