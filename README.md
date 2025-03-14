@@ -8,6 +8,8 @@ You can check out the live version of the project at the following [link](https:
 
 [![project-check](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml)
 
+[![Maintainability](https://qlty.sh/badges/80c8fd89-56d8-4b07-88f5-c9773f00ad18/maintainability.svg)](https://qlty.sh/gh/Disielsida/projects/frontend-project-12)
+
 ## Technologies Used
 - **React** — Hooks, context, optimization
 - **Redux Toolkit** — Global state management
