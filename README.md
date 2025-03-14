@@ -6,6 +6,8 @@ You can check out the live version of the project at the following [link](https:
 ## Hexlet tests and linter status:
 [![Actions Status](https://github.com/Disielsida/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions)
 
+[![project-check](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml/badge.svg)](https://github.com/Disielsida/frontend-project-12/actions/workflows/project-check.yml)
+
 ## Technologies Used
 - **React** — Hooks, context, optimization
 - **Redux Toolkit** — Global state management
