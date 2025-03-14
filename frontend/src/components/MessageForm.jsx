@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import * as Yup from 'yup';
 import {
   Form, InputGroup, Button, Container,
@@ -13,7 +13,12 @@ import { addMessage } from '../redux/slices/MessagesSlice.jsx';
 const MessageForm = ({ activeChannelId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const formControlRef = useRef();
   const username = useSelector((state) => state.authorization.username);
+
+  useEffect(() => {
+    formControlRef.current.focus();
+  }, []);
 
   const validationSchema = Yup.object({
     body: Yup.string().trim().required(t('errors.emptyMessage')),
@@ -54,6 +59,7 @@ const MessageForm = ({ activeChannelId }) => {
             placeholder={t('placeholders.messageControl')}
             className="border-0 p-0 ps-2 form-control"
             isInvalid={!!formik.errors.body}
+            ref={formControlRef}
           />
           <Form.Control.Feedback type="invalid" className="custom-invalid-tooltip">
             {formik.errors.body}

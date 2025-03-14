@@ -22,6 +22,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
 
   useEffect(() => {
     formControlRef.current.focus();
+    formControlRef.current.select();
   }, []);
 
   const validationSchema = Yup.object({

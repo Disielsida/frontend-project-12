@@ -16,7 +16,7 @@ const BaseChannelButton = ({ channelData, activeChannelId, handleSetActiveChanne
 );
 
 const Channel = ({
-  channelData, activeChannelId, handleSetActiveChannel, handleOpenModal,
+  channelData, activeChannelId, handleSetActiveChannel, handleOpenModal, lastChannelRef,
 }) => {
   const { t } = useTranslation();
 
@@ -45,6 +45,7 @@ const Channel = ({
           handleSetActiveChannel={handleSetActiveChannel}
         />
       )}
+      <div ref={lastChannelRef} />
     </Nav.Item>
   );
 };

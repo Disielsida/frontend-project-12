@@ -36,7 +36,9 @@ const PrivatePage = () => {
 
   const [modalInfo, setModalInfo] = useState({ type: null, channel: null });
 
-  const handleOpenModal = (type, channel = null) => setModalInfo({ type, channel });
+  const handleOpenModal = (type, channel = null) => {
+    setModalInfo({ type, channel });
+  };
   const handleCloseModal = () => setModalInfo({ type: null, task: null });
 
   useEffect(() => {
