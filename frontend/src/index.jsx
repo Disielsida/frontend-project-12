@@ -9,6 +9,7 @@ import './index.css';
 import './assets/application.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import SocketProvider from './SocketContext.jsx';
 import rollbarConfig from './rollbarConfig.js';
 
 const app = async () => {
@@ -18,11 +19,13 @@ const app = async () => {
   root.render(
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <Provider store={store}>
-          <I18nextProvider i18n={i18n}>
-            <App />
-          </I18nextProvider>
-        </Provider>
+        <SocketProvider>
+          <Provider store={store}>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </Provider>
+        </SocketProvider>
       </ErrorBoundary>
     </RollbarProvider>,
   );

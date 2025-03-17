@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -7,6 +7,7 @@ import {
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import SocketContext from '../../contexts/index.jsx';
 
 import { renameChannel, channelsSelectors } from '../../redux/slices/ChannelsSlice';
 
@@ -16,6 +17,8 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
   const dispatch = useDispatch();
 
   const { id, name } = modalInfo.channel;
+
+  const socket = useContext(SocketContext);
 
   const channels = useSelector(channelsSelectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
@@ -50,7 +53,7 @@ const RenameModal = ({ modalInfo, handleCloseModal }) => {
       try {
         const editedChannel = values;
 
-        dispatch(renameChannel({ id, editedChannel }));
+        dispatch(renameChannel({ id, editedChannel, socket }));
         toast.success(t('toastify.channelRenamed'), {
           autoClose: 3000,
         });

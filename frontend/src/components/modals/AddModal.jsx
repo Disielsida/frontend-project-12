@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
+import SocketContext from '../../contexts/index.jsx';
 
 import { addChannel, channelsSelectors } from '../../redux/slices/ChannelsSlice';
 
@@ -18,6 +19,8 @@ const AddModal = ({ handleCloseModal }) => {
 
   const channels = useSelector(channelsSelectors.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
+
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     formControlRef.current.focus();
@@ -54,7 +57,7 @@ const AddModal = ({ handleCloseModal }) => {
           throw new Error();
         }
 
-        await dispatch(addChannel(channel)).unwrap();
+        await dispatch(addChannel({ channel, socket })).unwrap();
 
         toast.success(t('toastify.channelCreated'), { autoClose: 3000 });
       } catch (error) {

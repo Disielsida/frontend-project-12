@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import socket from '../socket';
+import SocketContext from '../contexts/index.jsx';
 import { actions as messagesActions } from '../redux/slices/MessagesSlice';
 import { actions as channelsActions } from '../redux/slices/ChannelsSlice';
 
 const useSocket = () => {
   const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     socket.connect();
@@ -19,6 +20,7 @@ const useSocket = () => {
     });
 
     socket.on('removeChannel', (payload) => {
+      console.log(payload);
       dispatch(channelsActions.removeSocketChannel(payload.id));
     });
 
@@ -32,7 +34,7 @@ const useSocket = () => {
       socket.off('removeChannel');
       socket.off('renameChannel');
     };
-  }, [dispatch]);
+  }, [dispatch, socket]);
 };
 
 export default useSocket;

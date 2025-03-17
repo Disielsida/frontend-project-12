@@ -3,8 +3,6 @@ import axios from 'axios';
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../../routes.js';
 
-import socket from '../../socket.js';
-
 import { actions as channelsActions } from './ChannelsSlice.jsx';
 
 export const fetchMessages = createAsyncThunk(
@@ -24,7 +22,7 @@ export const fetchMessages = createAsyncThunk(
 
 export const addMessage = createAsyncThunk(
   'messages/addMessage',
-  async (message, { getState }) => {
+  async ({ message, socket }, { getState }) => {
     const { token } = getState().authorization;
 
     const response = await axios.post(routes.messagesPath(), message, {

@@ -12,7 +12,6 @@ import MessageForm from './MessageForm.jsx';
 import { fetchChannels, channelsSelectors, actions as channelsActions } from '../redux/slices/ChannelsSlice.jsx';
 import { fetchMessages, messagesSelectors } from '../redux/slices/MessagesSlice.jsx';
 import useSocket from '../hooks/useSocket.jsx';
-
 import getModal from './modals/index.js';
 
 const renderModal = (modalInfo, handleCloseModal) => {

@@ -3,8 +3,6 @@ import axios from 'axios';
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../../routes.js';
 
-import socket from '../../socket.js';
-
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { getState }) => {
@@ -21,7 +19,7 @@ export const fetchChannels = createAsyncThunk(
 
 export const addChannel = createAsyncThunk(
   'channels/addChannel',
-  async (channel, { getState }) => {
+  async ({ channel, socket }, { getState }) => {
     const { token } = getState().authorization;
 
     const response = await axios.post(routes.channelsPath(), channel, {
@@ -36,7 +34,7 @@ export const addChannel = createAsyncThunk(
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (id, { getState }) => {
+  async ({ id, socket }, { getState }) => {
     const { token } = getState().authorization;
 
     const response = await axios.delete(routes.removeOrRenameChannelPath(id), {
@@ -51,7 +49,7 @@ export const removeChannel = createAsyncThunk(
 
 export const renameChannel = createAsyncThunk(
   'channels/renameChannel',
-  async ({ id, editedChannel }, { getState }) => {
+  async ({ id, editedChannel, socket }, { getState }) => {
     const { token } = getState().authorization;
 
     const response = await axios.patch(routes.removeOrRenameChannelPath(id), editedChannel, {
@@ -86,7 +84,6 @@ const channelsSlice = createSlice({
       if (newState.activeChannelId === payload) {
         newState.activeChannelId = newState.ids.length > 0 ? newState.ids[0] : null;
       }
-
       return newState;
     },
     renameSocketChannel(state, { payload }) {

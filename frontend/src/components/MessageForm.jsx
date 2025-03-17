@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import * as Yup from 'yup';
 import {
   Form, InputGroup, Button, Container,
@@ -9,12 +9,15 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addMessage } from '../redux/slices/MessagesSlice.jsx';
+import SocketContext from '../contexts/index.jsx';
 
 const MessageForm = ({ activeChannelId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const formControlRef = useRef();
   const username = useSelector((state) => state.authorization.username);
+
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     formControlRef.current.focus();
@@ -35,7 +38,7 @@ const MessageForm = ({ activeChannelId }) => {
       const { body } = values;
       const cleanBody = leoProfanity.clean(body);
       const message = { body: cleanBody, channelId: activeChannelId, username };
-      await dispatch(addMessage(message)).unwrap();
+      await dispatch(addMessage({ message, socket })).unwrap();
       setFieldValue('body', '');
       setTouched({ body: false });
     },

@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useContext } from 'react';
 import {
   Modal, Form, Button,
 } from 'react-bootstrap';
@@ -7,12 +8,15 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { removeChannel } from '../../redux/slices/ChannelsSlice';
+import SocketContext from '../../contexts/index.jsx';
 
 const RemoveModal = ({ modalInfo, handleCloseModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { id } = modalInfo.channel;
+
+  const socket = useContext(SocketContext);
 
   const formik = useFormik({
     initialValues: {},
@@ -25,7 +29,7 @@ const RemoveModal = ({ modalInfo, handleCloseModal }) => {
       }
 
       try {
-        await dispatch(removeChannel(id)).unwrap();
+        await dispatch(removeChannel({ id, socket })).unwrap();
 
         toast.success(t('toastify.channelRemoved'), {
           autoClose: 3000,
