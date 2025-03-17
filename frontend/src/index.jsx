@@ -24,7 +24,9 @@ const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.connect();
+    if (!socket.connected) {
+      socket.connect();
+    }
 
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addSocketMessage(message));
