@@ -11,18 +11,21 @@ import './assets/application.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import rollbarConfig from './rollbarConfig.js';
-import routes from './routes.js';
 import SocketContext from './contexts/index.jsx';
 
-const socket = io('', {
-  path: routes.webSocketPath(),
-});
+const TestError = () => {
+  throw new Error('Проверка ErrorBoundary');
+};
 
-const SocketProvider = ({ children }) => (
-  <SocketContext.Provider value={socket}>
-    {children}
-  </SocketContext.Provider>
-);
+const SocketProvider = ({ children }) => {
+  const socket = io();
+
+  return (
+    <SocketContext.Provider value={socket}>
+      {children}
+    </SocketContext.Provider>
+  );
+};
 
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));
@@ -35,6 +38,8 @@ const app = async () => {
           <Provider store={store}>
             <I18nextProvider i18n={i18n}>
               <App />
+
+              <TestError />
             </I18nextProvider>
           </Provider>
         </SocketProvider>

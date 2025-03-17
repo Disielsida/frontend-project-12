@@ -1,5 +1,7 @@
+import 'dotenv/config';
+
 const rollbarConfig = {
-  accessToken: '916d783a2304494a9f4297b273b44355',
+  accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
   environment: 'production',
 };
 
