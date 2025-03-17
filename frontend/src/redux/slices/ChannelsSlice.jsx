@@ -119,7 +119,6 @@ const channelsSlice = createSlice({
       .addCase(addChannel.fulfilled, (state, { payload }) => {
         const newState = { ...state };
         channelsAdapter.addOne(newState, payload);
-
         newState.activeChannelId = payload.id;
 
         return newState;
