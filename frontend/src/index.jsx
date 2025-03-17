@@ -20,11 +20,11 @@ import { actions as channelsActions } from './redux/slices/ChannelsSlice';
 leoProfanity.add([...leoProfanity.getDictionary('ru'), ...leoProfanity.getDictionary('en')]);
 
 const SocketProvider = ({ children }) => {
-  const socket = io();
+  const socket = io('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.connect('');
+    socket.connect();
 
     socket.on('newMessage', (message) => {
       dispatch(messagesActions.addSocketMessage(message));
