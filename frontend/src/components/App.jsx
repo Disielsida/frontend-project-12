@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import leoProfanity from 'leo-profanity';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
@@ -25,17 +24,13 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
   const dispatch = useDispatch();
+  const { token, username } = useSelector((state) => state.authorization);
 
   useEffect(() => {
-    leoProfanity.add([...leoProfanity.getDictionary('ru'), ...leoProfanity.getDictionary('en')]);
-
-    const token = localStorage.getItem('authToken');
-    const username = localStorage.getItem('username');
-
     if (token) {
       dispatch(authActions.setUser({ token, loggedIn: !!token, username }));
     }
-  }, [dispatch]);
+  }, [dispatch, token, username]);
 
   return (
     <Router>

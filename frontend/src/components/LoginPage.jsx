@@ -110,7 +110,7 @@ const LoginPage = () => {
             <Card.Footer className="p-4">
               <Container className="text-center">
                 <span className="m-1">{t('loginPage.noAccount')}</span>
-                <Link to="/signup">{t('loginPage.registration')}</Link>
+                <Link to={routes.signupPagePath()}>{t('loginPage.registration')}</Link>
               </Container>
             </Card.Footer>
           </Card>

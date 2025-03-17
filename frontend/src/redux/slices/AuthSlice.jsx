@@ -51,9 +51,9 @@ const AuthSlice = createSlice({
   name: 'authorization',
   initialState:
     {
-      token: null,
-      loggedIn: false,
-      username: null,
+      token: localStorage.getItem('authToken'),
+      loggedIn: !!localStorage.getItem('authToken'),
+      username: localStorage.getItem('username'),
     },
   reducers: {
     setUser: (state, { payload }) => ({
@@ -68,6 +68,7 @@ const AuthSlice = createSlice({
       .addCase(logOut.fulfilled, (state) => ({
         ...state,
         loggedIn: false,
+        token: null,
         username: null,
       }))
       .addCase(logOut.rejected, (_, { error }) => {
