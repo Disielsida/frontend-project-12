@@ -13,10 +13,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import rollbarConfig from './rollbarConfig.js';
 import SocketContext from './contexts/index.jsx';
 
-const TestError = () => {
-  throw new Error('ErrorBoundary');
-};
-
 const SocketProvider = ({ children }) => {
   const socket = io();
 
@@ -30,7 +26,6 @@ const SocketProvider = ({ children }) => {
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));
   const i18n = await initI18n();
-
   root.render(
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
@@ -38,8 +33,6 @@ const app = async () => {
           <Provider store={store}>
             <I18nextProvider i18n={i18n}>
               <App />
-
-              <TestError />
             </I18nextProvider>
           </Provider>
         </SocketProvider>
