@@ -78,8 +78,7 @@ const channelsSlice = createSlice({
     },
     addSocketChannel: channelsAdapter.addOne,
     removeSocketChannel(state, { payload }) {
-      const newState = { ...state };
-      channelsAdapter.removeOne(newState, payload);
+      const newState = channelsAdapter.removeOne({ ...state }, payload);
 
       if (newState.activeChannelId === payload) {
         newState.activeChannelId = newState.ids.length > 0 ? newState.ids[0] : null;

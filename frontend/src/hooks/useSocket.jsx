@@ -20,7 +20,6 @@ const useSocket = () => {
     });
 
     socket.on('removeChannel', (payload) => {
-      console.log(payload);
       dispatch(channelsActions.removeSocketChannel(payload.id));
     });
 
