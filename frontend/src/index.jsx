@@ -14,7 +14,7 @@ import rollbarConfig from './rollbarConfig.js';
 import SocketContext from './contexts/index.jsx';
 
 const TestError = () => {
-  throw new Error('Проверка ErrorBoundary');
+  throw new Error('ErrorBoundary');
 };
 
 const SocketProvider = ({ children }) => {
