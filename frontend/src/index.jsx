@@ -48,7 +48,7 @@ const SocketProvider = ({ children }) => {
   );
 };
 
-const Error = () => {
+const TestError = () => {
   throw new Error('wefe');
 };
 
@@ -61,7 +61,7 @@ const app = async () => {
         <Provider store={store}>
           <SocketProvider>
             <I18nextProvider i18n={i18n}>
-              <Error />
+              <TestError />
               <App />
             </I18nextProvider>
           </SocketProvider>
