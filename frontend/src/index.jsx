@@ -49,6 +49,7 @@ const SocketProvider = ({ children }) => {
 };
 
 const TestError = () => {
+  console.log(import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN);
   throw new Error('wefe');
 };
 
