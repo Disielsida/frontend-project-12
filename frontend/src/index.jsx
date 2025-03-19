@@ -53,7 +53,7 @@ const app = async () => {
   const i18n = await initI18n();
   root.render(
     <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
+      <ErrorBoвмсвыыundary>
         <Provider store={store}>
           <SocketProvider>
             <I18nextProvider i18n={i18n}>
