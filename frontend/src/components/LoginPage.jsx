@@ -34,6 +34,7 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
+
     onSubmit: async (values, { setSubmitting }) => {
       if (!navigator.onLine) {
         toast.error(t('toastify.errors.network'));
