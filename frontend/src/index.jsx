@@ -48,15 +48,20 @@ const SocketProvider = ({ children }) => {
   );
 };
 
+const Error = () => {
+  throw new Error('wefe');
+};
+
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));
   const i18n = await initI18n();
   root.render(
     <RollbarProvider config={rollbarConfig}>
-      <ErrorBoвмсвыыundary>
+      <ErrorBoundary>
         <Provider store={store}>
           <SocketProvider>
             <I18nextProvider i18n={i18n}>
+              <Error />
               <App />
             </I18nextProvider>
           </SocketProvider>
