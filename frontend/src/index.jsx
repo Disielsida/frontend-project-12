@@ -48,11 +48,6 @@ const SocketProvider = ({ children }) => {
   );
 };
 
-const TestError = () => {
-  console.log(import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN);
-  throw new Error('wefe');
-};
-
 const app = async () => {
   const root = ReactDOM.createRoot(document.querySelector('#chat'));
   const i18n = await initI18n();
@@ -62,7 +57,6 @@ const app = async () => {
         <Provider store={store}>
           <SocketProvider>
             <I18nextProvider i18n={i18n}>
-              <TestError />
               <App />
             </I18nextProvider>
           </SocketProvider>
